@@ -40,13 +40,14 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role_id' => 1  // Asigna el rol author por defecto
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        $user->sendEmailVerificationNotification()
+        $user->sendEmailVerificationNotification();
 
 return redirect(RouteServiceProvider::HOME);
     }
