@@ -6,24 +6,10 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-
-public function up()
-{
-    Schema::create('roles', function (Blueprint $table) {
-        $table->id();  // Esto crea una columna 'id' como clave primaria y autoincremental
-        $table->string('name')->unique();  // Esto crea una columna 'name' con restricción de unicidad
-    });
-}
-
-public function down()
-{
-    Schema::dropIfExists('roles');
-}
-
     /**
      * Run the migrations.
      */
-/*    public function up(): void
+    public function up(): void
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
@@ -34,8 +20,8 @@ public function down()
     /**
      * Reverse the migrations.
      */
-/*    public function down(): void
+    public function down(): void
     {
         Schema::dropIfExists('roles');
-    } */
+    }
 };
