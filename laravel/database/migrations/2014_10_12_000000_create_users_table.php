@@ -6,10 +6,27 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+
+public function up()
+{
+    Schema::table('users', function (Blueprint $table) {
+        $table->unsignedBigInteger('role_id')->nullable();  // Esto añade la columna 'role_id' con opción de valores null
+        $table->foreign('role_id')->references('id')->on('roles');  // Esto añade la clave foránea relacionando 'role_id' con 'id' de la tabla 'roles'
+    });
+}
+
+public function down()
+{
+    Schema::table('users', function (Blueprint $table) {
+        $table->dropForeign(['role_id']);  // Esto elimina la clave foránea de la tabla 'users'
+        $table->dropColumn('role_id');  // Esto elimina la columna 'role_id' de la tabla 'users'
+    });
+}
+
     /**
      * Run the migrations.
      */
-    public function up(): void
+/*    public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
@@ -25,8 +42,8 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+/*    public function down(): void
     {
         Schema::dropIfExists('users');
-    }
+    } */
 };
