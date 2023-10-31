@@ -10,17 +10,16 @@ use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
-   public function run()
-   {
-       $admin = new User([
-           'name'      => config('admin.name'),
-           'email'     => config('admin.email'),
-           'password'  => Hash::make(config('admin.password')),
-       ]);
-       $admin->save();
-   }
+    public function run()
+    {
+        User::create([
+            'name' => 'admin',
+            'email' => 'admin@fp.insjoaquimmir.cat',
+            'password' => Hash::make('123456789'),
+            'role_id' => 3,  // Asigna el rol admin
+        ]);
+    }
 }
-
 /* Parte de abajo es la orginal del fichero */
 
 /*namespace Database\Seeders;
