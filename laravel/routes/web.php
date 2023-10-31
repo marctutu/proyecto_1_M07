@@ -4,7 +4,9 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Request;  // Importa la clase Request
 use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FileController;
 
+Route::resource('files', FileController::class);
 /*
 |--------------------------------------------------------------------------
 | Web Routes
