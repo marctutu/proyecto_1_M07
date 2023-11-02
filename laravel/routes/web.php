@@ -6,7 +6,10 @@ use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FileController;
 
-Route::resource('files', FileController::class);
+Route::resource('files', FileController::class)
+    /*->middleware(['auth', 'role:1']);*/
+    ->middleware(['auth', 'role.any:1,3']);
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
