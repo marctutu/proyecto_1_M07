@@ -21,12 +21,16 @@
                         @endif
                         <form method="post" action="{{ route('files.store') }}" enctype="multipart/form-data">
                            @csrf
-                           <div class="form-group">
+                           <div class="form-group mb-4">
                                <label for="upload">File:</label>
                                <input type="file" class="form-control" name="upload"/>
                            </div>
-                           <button type="submit" class="btn btn-primary">Create</button>
-                           <button type="reset" class="btn btn-secondary">Reset</button>
+                            <button type="submit" class="btn btn-primary bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Create</button>
+                            <button type="reset" class="btn btn-secondary bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Reset</button>
+                            <a href="{{ url('/files') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-4">
+                                Back
+                            </a>
+
                         </form>
                     </div>
                 </div>

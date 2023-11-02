@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 
 class FileController extends Controller
 {
@@ -119,10 +121,10 @@ class FileController extends Controller
             ]);
 
             return redirect()->route('files.show', $file)
-                ->with('success', 'File successfully updated');
+                ->with('success', '*File successfully updated');
         } else {
             return redirect()->route('files.edit', $file)
-                ->with('error', 'Error updating file');
+                ->with('error', '*Error updating file');
         }
     }
 
@@ -138,10 +140,10 @@ class FileController extends Controller
             $file->delete();
 
             return redirect()->route('files.index')
-                ->with('success', 'File successfully deleted');
+                ->with('success', '*File successfully deleted');
         } else {
             return redirect()->route('files.show', $file)
-                ->with('error', 'Error deleting file');
+                ->with('error', '*Error deleting file');
         }
     }
 
