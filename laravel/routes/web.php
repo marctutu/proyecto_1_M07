@@ -5,10 +5,17 @@ use Illuminate\Http\Request;  // Importa la clase Request
 use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\PostController;
+
+
+Route::resource('posts', PostController::class);
 
 Route::resource('files', FileController::class)
     /*->middleware(['auth', 'role:1']);*/
     ->middleware(['auth', 'role.any:1,3']);
+
+    // Update the route to point to the correct controller and method
+Route::put('/file/{id}', [FileController::class, 'update'])->name('file.update');
 
 /*
 |--------------------------------------------------------------------------
