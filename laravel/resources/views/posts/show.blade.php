@@ -20,12 +20,12 @@
                 @endif
                 
                 <div class="flex items-center justify-start mt-4">
-                    <a href="{{ route('posts.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">Back to all posts</a>
-                    <a href="{{ route('posts.edit', $post) }}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded mr-2">Edit</a>
+                    <a href="{{ route('posts.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2 mt-4">Back to all posts</a>
+                    <a href="{{ route('posts.edit', $post) }}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded mr-2 mt-4">Edit</a>
                     <form action="{{ route('posts.destroy', $post) }}" method="POST" class="inline">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4">Delete</button>
                     </form>
                 </div>
             </div>

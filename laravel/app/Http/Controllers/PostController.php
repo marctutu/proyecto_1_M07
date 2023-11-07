@@ -40,7 +40,7 @@ class PostController extends Controller
         $file_id = null;
         if ($request->hasFile('file_id')) {
             $file = $request->file('file_id');
-            $path = $file->store('uploads', 'public');
+            $path = $file->store('file_ids', 'public');
             $fileSize = $file->getSize();
 
             $fileModel = new \App\Models\File; // Asegúrate de usar el namespace correcto
@@ -85,8 +85,10 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('posts.edit', compact('post'));
+        $file = $post->file; // Assuming there's a file relation defined in your Post model
+        return view('posts.edit', compact('post', 'file'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -95,26 +97,31 @@ class PostController extends Controller
     {
         $validatedData = $request->validate([
             'body' => 'required|string',
-            'upload' => 'sometimes|file', // Add validation for the file
+            'file_id' => 'sometimes|file', // Asegúrate de que el nombre del campo coincida con tu formulario.
         ]);
-
-        if ($request->hasFile('upload')) {
-            $file = $request->file('upload');
-            $filename = $file->store('files', 'public'); // This uploads the file to `storage/app/public/files`
-
-            // Update the associated file's path in the database
-            $post->file()->update([
-                'filepath' => $filename,
-                // 'filesize' => $file->getSize(), // Add this if you want to store file size
-            ]);
+    
+        // Verifica si se subió un archivo y actúa en consecuencia.
+        if ($request->hasFile('file_id')) {
+            $file = $request->file('file_id');
+            $filename = $file->store('files', 'public'); // Esto carga el archivo a `storage/app/public/files`
+    
+            // Actualiza la ruta del archivo asociado en la base de datos
+            // Si el post ya tiene un archivo, actualízalo. Si no, crea uno nuevo.
+            if ($post->file) {
+                $post->file->update(['filepath' => $filename]);
+            } else {
+                $fileModel = new File(['filepath' => $filename]);
+                $post->file()->save($fileModel);
+            }
         }
-
-        // Update the post's body
+    
+        // Actualiza el cuerpo del post.
         $post->update(['body' => $validatedData['body']]);
-
-        return redirect()->route('posts.index', $post)->with('success', 'Post and file successfully updated');
+    
+        // Redirige con un mensaje de éxito.
+        return redirect()->route('posts.index')->with('success', 'Post and file successfully updated');
     }
-
+    
 
 
     /**

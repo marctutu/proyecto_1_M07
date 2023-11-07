@@ -9,15 +9,21 @@ class Post extends Model
 {
     use HasFactory;
 
-    public function author()
+    public function user()
     {
         return $this->belongsTo(User::class, 'author_id');
     }
+    
+    public function author()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 
     public function file()
     {
-        return $this->belongsTo(File::class, 'file_id');
-    }
+        return $this->belongsTo(File::class);
+    }   
 
     public function likes()
     {

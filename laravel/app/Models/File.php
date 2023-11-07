@@ -9,4 +9,16 @@ class File extends Model
     use HasFactory;
 
     protected $fillable = ['filepath', 'filesize'];
+
+    public function post()
+    {
+        return $this->hasOne(Post::class);
+    }
+
+    public function place()
+    {
+        return $this->hasOne(Place::class);
+    }
+
+
 }
