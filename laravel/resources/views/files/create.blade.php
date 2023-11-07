@@ -1,7 +1,7 @@
 <x-app-layout>
    <x-slot name="header">
        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-           {{ __('Create Post') }}
+           {{ __('Upload File') }}
        </h2>
    </x-slot>
 
@@ -19,23 +19,18 @@
                            </ul>
                         </div>
                         @endif
-                        <form method="post" action="{{ route('posts.store') }}" enctype="multipart/form-data">
-                            @csrf
-                            <div class="form-group mb-4">
-                                <label for="body">Body:</label>
-                                <textarea class="form-control" name="body" required></textarea>
-                            </div>
-                            <div class="form-group mb-4">
-                                <label for="file_id">File:</label>
-                                <input type="file" class="form-control" name="file_id"/>
-                            </div>
-                            <input type="hidden" name="author_id" value="{{ auth()->user()->id }}" />
-                            <button type="submit" class="btn btn-primary">Create</button>
-                            <!-- ... otros botones ... -->
+                        <form method="post" action="{{ route('files.store') }}" enctype="multipart/form-data">
+                           @csrf
+                           <div class="form-group mb-4">
+                               <label for="upload">File:</label>
+                               <input type="file" class="form-control" name="upload"/>
+                           </div>
+                            <button type="submit" class="btn btn-primary bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Create</button>
                             <button type="reset" class="btn btn-secondary bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Reset</button>
                             <a href="{{ url('/files') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-4">
                                 Back
                             </a>
+
                         </form>
                     </div>
                 </div>
@@ -43,4 +38,3 @@
         </div>
     @endsection
 </x-app-layout>
-

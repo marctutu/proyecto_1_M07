@@ -11,6 +11,8 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // app/Http/Controllers/PostController.php
+
     public function index()
     {
         $posts = Post::all();

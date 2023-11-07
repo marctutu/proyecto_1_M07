@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\File;
-use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -15,11 +14,10 @@ class FileController extends Controller
      */
     public function index()
     {
-        $files = File::all();
-        $posts = Post::all();  // Añadir esta línea para obtener todos los posts
-        return view('files.index', compact('files', 'posts'));
+        return view("files.index", [
+            "files" => File::all()
+        ]);
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -81,19 +79,16 @@ class FileController extends Controller
      */
     public function show($id)
     {
-        // Asegúrate de cargar la relación con 'post'
-        $file = File::with('post')->find($id);
+        $file = File::find($id);
 
         if ($file && \Storage::disk('public')->exists($file->filepath)) {
             $url = asset("storage/{$file->filepath}");
-            // 'post' ya está cargado y será accesible en la vista a través de $file->post
             return view('files.show', compact('file', 'url'));
         } else {
             return redirect()->route('files.index')
                 ->with('error', 'File not found');
         }
-    }
-
+}
 
 
 

@@ -7,15 +7,20 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\PostController;
 
-
-Route::resource('posts', PostController::class);
-
 Route::resource('files', FileController::class)
     /*->middleware(['auth', 'role:1']);*/
     ->middleware(['auth', 'role.any:1,3']);
 
-    // Update the route to point to the correct controller and method
-Route::put('/file/{id}', [FileController::class, 'update'])->name('file.update');
+// Posts
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
+Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
+Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
+
+// ...
 
 /*
 |--------------------------------------------------------------------------

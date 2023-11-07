@@ -29,5 +29,5 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
-    protected $fillable = ['title', 'body', 'author_id', 'file_id'];
+    protected $fillable = ['body', 'author_id', 'file_id'];
 }
