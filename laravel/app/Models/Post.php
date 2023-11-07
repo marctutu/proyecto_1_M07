@@ -13,7 +13,7 @@ class Post extends Model
     {
         return $this->belongsTo(User::class, 'author_id');
     }
-    
+
     public function author()
     {
         return $this->belongsTo(User::class);
@@ -35,5 +35,5 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
-    protected $fillable = ['body', 'author_id', 'file_id'];
+    protected $fillable = ['body', 'author_id', 'file_id', 'latitude', 'longitude'];
 }

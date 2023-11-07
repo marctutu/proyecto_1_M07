@@ -34,7 +34,9 @@ class PostController extends Controller
     {
         $validatedData = $request->validate([
             'body' => 'required|string',
-            'file_id' => 'nullable|image|mimes:jpg,jpeg,png,gif', // Asegúrate de validar como imagen
+            'file_id' => 'nullable|image|mimes:jpg,jpeg,png,gif',
+            'latitude' => 'required|numeric',  // Añade la validación para latitude
+            'longitude' => 'required|numeric', // Añade la validación para longitude
         ]);
 
         $file_id = null;
@@ -55,6 +57,8 @@ class PostController extends Controller
             'body' => $validatedData['body'],
             'author_id' => auth()->user()->id,
             'file_id' => $file_id,
+            'latitude' => $validatedData['latitude'],  // Añade latitude al array
+            'longitude' => $validatedData['longitude'], // Añade longitude al array
         ]);
 
         return redirect()->route('posts.show', $post)
@@ -98,25 +102,30 @@ class PostController extends Controller
         $validatedData = $request->validate([
             'body' => 'required|string',
             'file_id' => 'sometimes|file', // Asegúrate de que el nombre del campo coincida con tu formulario.
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
         ]);
-    
+
         // Verifica si se subió un archivo y actúa en consecuencia.
         if ($request->hasFile('file_id')) {
             $file = $request->file('file_id');
             $filename = $file->store('files', 'public'); // Esto carga el archivo a `storage/app/public/files`
-    
-            // Actualiza la ruta del archivo asociado en la base de datos
-            // Si el post ya tiene un archivo, actualízalo. Si no, crea uno nuevo.
-            if ($post->file) {
-                $post->file->update(['filepath' => $filename]);
-            } else {
-                $fileModel = new File(['filepath' => $filename]);
-                $post->file()->save($fileModel);
-            }
+        
+            // Recupera o crea un registro de archivo, luego obtén el ID
+            $fileModel = $post->file ?? new File();
+            $fileModel->filepath = $filename;
+            $fileModel->save();
+        
+            // Establece el file_id con el ID del registro del archivo
+            $validatedData['file_id'] = $fileModel->id;
         }
+        
+        // Actualiza el post con los datos validados
+        $post->update($validatedData);
+        
     
         // Actualiza el cuerpo del post.
-        $post->update(['body' => $validatedData['body']]);
+        $post->update($validatedData);
     
         // Redirige con un mensaje de éxito.
         return redirect()->route('posts.index')->with('success', 'Post and file successfully updated');

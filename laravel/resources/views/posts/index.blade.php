@@ -23,7 +23,8 @@
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">File ID</th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Author ID</th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created At</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Updated At</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Longitude</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Latitude</th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                                 </tr>
                             </thead>
@@ -35,7 +36,8 @@
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $post->file_id }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $post->author_id }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $post->created_at }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $post->updated_at }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $post->longitude}}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $post->latitude}}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             <!-- Define las rutas y métodos correspondientes en tu archivo de rutas -->
                                             <a href="{{ route('posts.show', $post->id) }}" class="text-indigo-600 hover:text-indigo-900">View</a>

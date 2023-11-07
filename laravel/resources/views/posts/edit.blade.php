@@ -20,6 +20,16 @@
                         <span class="text-sm text-gray-600">Current file: {{ $post->file->filepath }}</span>
                         @endif
                     </div>
+                    <div class="mb-4">
+                        <label for="latitude" class="block text-gray-700 text-sm font-bold mb-2">Latitude:</label>
+                        <input type="number" step="0.01" name="latitude" id="latitude" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="{{ $post->latitude }}" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="longitude" class="block text-gray-700 text-sm font-bold mb-2">Longitude:</label>
+                        <input type="number" step="0.01" name="longitude" id="longitude" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="{{ $post->longitude }}" required>
+                    </div>
+
                     <div class="flex items-center justify-between">
                         <button type="submit" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
                             Update
