@@ -13,7 +13,7 @@
                 <p class="text-sm text-gray-600">File id: {{ $place->file_id }}</p>
                 <p class="text-sm text-gray-600">Latitude: {{ $place->latitude }}</p>
                 <p class="text-sm text-gray-600">Longitude: {{ $place->longitude }}</p>
-                <p class="text-sm text-gray-600">Author ID: {{ $place->author_id }}</p>
+                <p class="text-sm text-gray-600">Author: {{ $place->author->name }}</p>
                 
                 @if($place->file)
                 <div class="mt-4">

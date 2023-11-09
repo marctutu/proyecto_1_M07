@@ -14,11 +14,21 @@ class PlaceController extends Controller
      */
     // app/Http/Controllers/PlaceController.php
 
-    public function index()
-    {
-        $places = Place::all();
-        return view('places.index', compact('places'));
-    }
+    public function index(Request $request)
+{
+    // Recuperem el valor de cerca de la sol·licitud
+    $search = $request->input('search');
+
+    // Consultem els posts amb paginació i, si hi ha un terme de cerca, filtrarem per aquest terme
+    $places = Place::with('author')
+        ->when($search, function ($query) use ($search) {
+            return $query->where('description', 'LIKE', "%{$search}%");
+        })
+        ->paginate(5);
+
+    // Passem els posts i el terme de cerca actual a la vista
+    return view('places.index', compact('places', 'search'));
+}
 
     /**
      * Show the form for creating a new resource.
