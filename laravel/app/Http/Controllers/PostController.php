@@ -12,19 +12,19 @@ class PostController extends Controller
      * Display a listing of the resource.
      */
 
-    public function index(Request $request)
-    {
-        // Recuperem el valor de cerca de la sol·licitud
-        $search = $request->input('search');
-
-        $posts = Post::when($search, function ($query) use ($search) {
-            return $query->where('body', 'LIKE', "%{$search}%");
-        })->paginate(5);
-
-        // Passem els posts i el terme de cerca actual a la vista
-        return view('posts.index', compact('posts', 'search'));
-    }
-
+     public function index(Request $request)
+     {
+         $search = $request->input('search');
+     
+         $posts = Post::with('author')
+                      ->when($search, function ($query) use ($search) {
+                          return $query->where('body', 'LIKE', "%{$search}%");
+                      })
+                      ->paginate(5);
+     
+         // Pasar los posts y el término de búsqueda a la vista
+         return view('posts.index', compact('posts', 'search'));
+     }
 
     /**
      * Show the form for creating a new resource.
@@ -81,6 +81,7 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
+        $post = Post::with('author')->findOrFail($id);
 
         if ($post) {
             return view('posts.show', compact('post'));

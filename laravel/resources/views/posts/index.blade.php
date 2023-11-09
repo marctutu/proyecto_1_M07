@@ -29,7 +29,7 @@
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Body</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">File ID</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Author ID</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Author</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created At</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Longitude</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Latitude</th>
@@ -42,7 +42,7 @@
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $post->id }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $post->body }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $post->file_id }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $post->author_id }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $post->author->name }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $post->created_at }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $post->longitude }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $post->latitude }}</td>

@@ -8,7 +8,7 @@
             <div class="p-6 bg-white border-b border-gray-200">
                 <p class="mb-4">Post: {{ $post->body }}</p>
                 <p class="text-sm text-gray-600">Posted on: {{ $post->created_at->format('m/d/Y') }}</p>
-                <p class="text-sm text-gray-600">Author ID: {{ $post->author_id }}</p>
+                <p class="text-sm text-gray-600">Author: {{ $post->author->name }}</p>
                 <p class="text-sm text-gray-600">Latitude: {{ $post->latitude }}</p>
                 <p class="text-sm text-gray-600">Longitude: {{ $post->longitude }}</p>
                 
