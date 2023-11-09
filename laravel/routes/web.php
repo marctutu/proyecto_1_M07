@@ -1,14 +1,14 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use Illuminate\Http\Request;  // Importa la clase Request
+use Illuminate\Http\Request; 
 use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PlaceController;
 
 Route::resource('files', FileController::class)
-    /*->middleware(['auth', 'role:1']);*/
     ->middleware(['auth', 'role.any:1,3']);
 
 // Posts
@@ -20,8 +20,14 @@ Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.e
 Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
 Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 
-// ...
-
+// places
+Route::get('/places', [PlaceController::class, 'index'])->name('places.index');
+Route::get('/places/create', [PlaceController::class, 'create'])->name('places.create');
+Route::post('/places', [PlaceController::class, 'store'])->name('places.store');
+Route::get('/places/{place}', [PlaceController::class, 'show'])->name('places.show');
+Route::get('/places/{place}/edit', [PlaceController::class, 'edit'])->name('places.edit');
+Route::put('/places/{place}', [PlaceController::class, 'update'])->name('places.update');
+Route::delete('/places/{place}', [PlaceController::class, 'destroy'])->name('places.destroy');
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -51,3 +57,4 @@ Route::middleware('auth')->group(function () {
 Route::get('mail/test', [MailController::class, 'test']);
 
 require __DIR__.'/auth.php';
+
