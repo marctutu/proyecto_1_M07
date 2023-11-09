@@ -11,13 +11,20 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    // app/Http/Controllers/PostController.php
 
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::all();
-        return view('posts.index', compact('posts'));
+        // Recuperem el valor de cerca de la sol·licitud
+        $search = $request->input('search');
+
+        $posts = Post::when($search, function ($query) use ($search) {
+            return $query->where('body', 'LIKE', "%{$search}%");
+        })->paginate(5);
+
+        // Passem els posts i el terme de cerca actual a la vista
+        return view('posts.index', compact('posts', 'search'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -35,8 +42,8 @@ class PostController extends Controller
         $validatedData = $request->validate([
             'body' => 'required|string',
             'file_id' => 'nullable|image|mimes:jpg,jpeg,png,gif',
-            'latitude' => 'required|numeric',  // Añade la validación para latitude
-            'longitude' => 'required|numeric', // Añade la validación para longitude
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
         ]);
 
         $file_id = null;
@@ -45,7 +52,7 @@ class PostController extends Controller
             $path = $file->store('file_ids', 'public');
             $fileSize = $file->getSize();
 
-            $fileModel = new \App\Models\File; // Asegúrate de usar el namespace correcto
+            $fileModel = new \App\Models\File;
             $fileModel->filepath = $path;
             $fileModel->filesize = $fileSize;
             $fileModel->save();
@@ -57,8 +64,8 @@ class PostController extends Controller
             'body' => $validatedData['body'],
             'author_id' => auth()->user()->id,
             'file_id' => $file_id,
-            'latitude' => $validatedData['latitude'],  // Añade latitude al array
-            'longitude' => $validatedData['longitude'], // Añade longitude al array
+            'latitude' => $validatedData['latitude'],
+            'longitude' => $validatedData['longitude'],
         ]);
 
         return redirect()->route('posts.show', $post)
@@ -89,7 +96,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $file = $post->file; // Assuming there's a file relation defined in your Post model
+        $file = $post->file;
         return view('posts.edit', compact('post', 'file'));
     }
 
@@ -101,7 +108,7 @@ class PostController extends Controller
     {
         $validatedData = $request->validate([
             'body' => 'required|string',
-            'file_id' => 'sometimes|file', // Asegúrate de que el nombre del campo coincida con tu formulario.
+            'file_id' => 'sometimes|file',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
         ]);

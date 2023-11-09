@@ -16,11 +16,11 @@
                         </div>
                     @endif    
                     {{ __("You're logged in!") }}
-                    <h2 class="mb-4">{{ __('Resources') }}</h2>
-                    <a href="{{ url('/files') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mb-4">
+                    <h2 class="mb-4">{{ __('Menú') }}</h2>
+                    <a href="{{ url('/files') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mb-4 mx-8">
                         {{ __('Files') }}
                     </a>
-                    <a href="{{ url('/posts') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mb-4">
+                    <a href="{{ url('/posts') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mb-4 mx-8">
                         {{ __('Posts') }}
                     </a>
                     </div>

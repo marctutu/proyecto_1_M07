@@ -8,7 +8,6 @@
             <div class="p-6 bg-white border-b border-gray-200">
                 <p class="mb-4">Post: {{ $post->body }}</p>
                 <p class="text-sm text-gray-600">Posted on: {{ $post->created_at->format('m/d/Y') }}</p>
-                <p class="text-sm text-gray-600">Posted on: {{ $post->updated_at->format('m/d/Y') }}</p>
                 <p class="text-sm text-gray-600">Author ID: {{ $post->author_id }}</p>
                 <p class="text-sm text-gray-600">Latitude: {{ $post->latitude }}</p>
                 <p class="text-sm text-gray-600">Longitude: {{ $post->longitude }}</p>
@@ -17,7 +16,6 @@
                 <div class="mt-4">
                     <h2 class="text-xl font-bold mb-2">File Details</h2>
                     <img src="{{ Storage::url($post->file->filepath) }}" alt="File Image" class="w-32 h-32 object-cover mb-2">
-                    <!-- <p class="text-sm text-gray-600">File Size: {{ number_format($post->file->filesize / 1024, 2) }} KB</p> -->
                 </div>
                 @endif
                 

@@ -14,21 +14,15 @@
     @endif
 
 <div class="container">
-    <!-- Display file info and image -->
     <h1 class="mb-4 text-white">{{ $file->filepath }}</h1>
     
     <div class="mb-4 flex">
-        <!-- Edit button -->
         <a href="{{ route('files.edit', $file) }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-4">Edit</a>
-
-        <!-- Delete button -->
         <form action="{{ route('files.destroy', $file) }}" method="POST" onsubmit="return confirm('Are you sure?');" class="mr-4">
             @csrf
             @method('DELETE')
             <button type="submit" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-4">Delete</button>
         </form>
-
-        <!-- Back button -->
         <a href="{{ url('/files') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Back</a>
     </div>
 
