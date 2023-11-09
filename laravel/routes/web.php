@@ -11,23 +11,12 @@ use App\Http\Controllers\PlaceController;
 Route::resource('files', FileController::class)
     ->middleware(['auth', 'role.any:1,3']);
 
-// Posts
-Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
-Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
-Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
-Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
-Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
-Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
-Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
+Route::resource('posts', PostController::class)
+    ->middleware(['auth', 'role.any:1,3']);
 
-// places
-Route::get('/places', [PlaceController::class, 'index'])->name('places.index');
-Route::get('/places/create', [PlaceController::class, 'create'])->name('places.create');
-Route::post('/places', [PlaceController::class, 'store'])->name('places.store');
-Route::get('/places/{place}', [PlaceController::class, 'show'])->name('places.show');
-Route::get('/places/{place}/edit', [PlaceController::class, 'edit'])->name('places.edit');
-Route::put('/places/{place}', [PlaceController::class, 'update'])->name('places.update');
-Route::delete('/places/{place}', [PlaceController::class, 'destroy'])->name('places.destroy');
+Route::resource('places', PlaceController::class)
+    ->middleware(['auth', 'role.any:1,3']);
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes

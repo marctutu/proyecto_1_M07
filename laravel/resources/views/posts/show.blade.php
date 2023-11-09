@@ -6,22 +6,22 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
             <div class="p-6 bg-white border-b border-gray-200">
-                <p class="mb-4">Post: {{ $post->body }}</p>
-                <p class="text-sm text-gray-600">Posted on: {{ $post->created_at->format('m/d/Y') }}</p>
-                <p class="text-sm text-gray-600">Author: {{ $post->author->name }}</p>
-                <p class="text-sm text-gray-600">Latitude: {{ $post->latitude }}</p>
-                <p class="text-sm text-gray-600">Longitude: {{ $post->longitude }}</p>
+                <p class="text-gray-800 text-xl font-semibold mb-4">Post: {{ $post->body }}</p>
+                <p class="text-gray-800 text-xl font-semibold mb-4">Posted on: {{ $post->created_at->format('m/d/Y') }}</p>
+                <p class="text-gray-800 text-xl font-semibold mb-4">Author: {{ $post->author->name }}</p>
+                <p class="text-gray-800 text-xl font-semibold mb-4">Latitude: {{ $post->latitude }}</p>
+                <p class="text-gray-800 text-xl font-semibold mb-4">Longitude: {{ $post->longitude }}</p>
                 
                 @if($post->file)
                 <div class="mt-4">
-                    <h2 class="text-xl font-bold mb-2">File Details</h2>
+                    <h2 class="text-gray-800 text-xl font-semibold mb-4">File Details</h2>
                     <img src="{{ Storage::url($post->file->filepath) }}" alt="File Image" class="w-32 h-32 object-cover mb-2">
                 </div>
                 @endif
                 
-                <div class="flex items-center justify-start mt-4">
-                    <a href="{{ route('posts.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2 mt-4">Back to all posts</a>
-                    <a href="{{ route('posts.edit', $post) }}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded mr-2 mt-4">Edit</a>
+                <div class="flex flex-wrap gap-4 justify-start">
+                    <a href="{{ route('posts.index') }}" style="background: black;" class="text-white font-bold py-2 px-4 rounded mr-2 mt-4">Back</a>
+                    <a href="{{ route('posts.edit', $post) }}" style="background: blue;" class="text-white font-bold py-2 px-4 rounded mr-2 mt-4">Edit</a>
                     <form action="{{ route('posts.destroy', $post) }}" method="POST" class="inline">
                         @csrf
                         @method('DELETE')

@@ -28,7 +28,7 @@
                         <button type="submit" style="background-color: blue; color: white;" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
                             Submit
                         </button>
-                        <a href="{{ route('posts.index') }}" tyle="background-color: red; class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                        <a href="{{ route('posts.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
                             Cancel
                         </a>
                     </div>

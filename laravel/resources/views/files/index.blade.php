@@ -1,16 +1,10 @@
 <x-app-layout>
-   <x-slot name="header">
-       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-           {{ __('Files') }}
-       </h2>
-   </x-slot>
-
    @section("content")
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
-                    <a href="{{ url('/files/create') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mb-4">
+                    <a href="{{ url('/files/create') }}" style="background-color: blue;" class="text-white font-bold py-2 px-4 rounded mb-4">
                         Create
                     </a>
                     @if (session('success'))
@@ -32,7 +26,6 @@
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Photo</th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Filesize</th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Updated</th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                                 </tr>
                             </thead>
@@ -46,9 +39,8 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $file->filesize }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $file->created_at }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $file->updated_at }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <a href="{{ url('/files/' . $file->id) }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                                        <a href="{{ url('/files/' . $file->id) }}" style="background-color: green;" class="text-white font-bold py-2 px-4 rounded">
                                             Show
                                         </a>
                                     </td>

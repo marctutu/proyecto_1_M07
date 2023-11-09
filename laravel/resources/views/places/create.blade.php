@@ -30,7 +30,7 @@
                         <input type="number" step="0.000001" name="longitude" id="longitude" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                     </div>
                     <div class="flex items-center justify-between">
-                        <button type="submit" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                        <button type="submit" style="background: blue;" class="text-white font-bold py-2 px-4 rounded">
                             Submit
                         </button>
                         {{-- Asegúrate de cambiar la ruta a places.index --}}

@@ -6,11 +6,11 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 bg-white border-b border-gray-200">
-                <a href="{{ route('posts.create') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mb-4">Crear Nuevo Post</a>
+                <a href="{{ route('posts.create') }}" style="background-color: green;" class="text-white font-bold py-2 px-4 rounded mb-4">Crear Nuevo Post</a>
                 <form action="{{ route('posts.index') }}" method="GET" class="mb-4">
                     <div class="flex mt-4">
-                        <input type="text" name="search" class="form-control" placeholder="Buscar en el cuerpo del post..." value="{{ request()->query('search') }}" autofocus>
-                        <button type="submit" style="background-color: #3490dc; color: white;" class="ml-2 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md hover:bg-blue-700">
+                    <input type="text" name="search" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" placeholder="Buscar Post" value="{{ request()->query('search') }}" autofocus>
+                        <button type="submit" style="background-color: blue;" class="ml-2 text-white font-bold py-2 px-4 rounded-md">
                             Buscar
                         </button>
                     </div>
@@ -52,7 +52,6 @@
                                             @method('DELETE')
                                             <button type="submit" class="text-red-600 hover:text-red-900">Eliminar</button>
                                         </form>
-                                    </td>
                                 </tr>
                             @empty
                                 <tr>
