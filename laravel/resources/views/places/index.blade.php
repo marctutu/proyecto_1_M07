@@ -3,7 +3,7 @@
 
 @section('content')
 <div class="py-12">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="max-w-9xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 bg-white border-b border-gray-200">
                 <a href="{{ route('places.create') }}" style="background-color: green;" class="text-white font-bold py-2 px-4 rounded mb-4">Crear Nuevo Lugar</a>
@@ -21,6 +21,7 @@
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Photo</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Latitude</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Longitude</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Author</th>
@@ -34,7 +35,18 @@
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $place->id }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $place->name }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $place->description }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {{ strlen($place->description) > 20 ? substr($place->description, 0, 20) . '...' : $place->description }}
+                                    @if(strlen($place->description) > 20)
+                                        <a href="{{ route('places.show', $place->id) }}" class="text-indigo-600 hover:text-indigo-900">Ver más</a>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @if($place->file)
+                                        <div class="mt-4">
+                                            <img src='{{ asset("storage/{$place->file->filepath}") }}' alt="File Image" class="w-32 h-32 object-cover mb-2">
+                                    @endif
+                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $place->latitude }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $place->longitude }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $place->author->name }}</td>

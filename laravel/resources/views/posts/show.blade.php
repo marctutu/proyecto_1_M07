@@ -15,7 +15,7 @@
                 @if($post->file)
                 <div class="mt-4">
                     <h2 class="text-gray-800 text-xl font-semibold mb-4">File Details</h2>
-                    <img src="{{ Storage::url($post->file->filepath) }}" alt="File Image" class="w-32 h-32 object-cover mb-2">
+                    <img src='{{ asset("storage/{$post->file->filepath}") }}' alt="File Image" class="w-32 h-32 object-cover mb-2">
                 </div>
                 @endif
                 

@@ -10,7 +10,7 @@
                 <p class="text-gray-800 text-xl font-semibold mb-4">Description: {{ $place->description }}</p>
                 <p class="text-gray-800 text-xl font-semibold mb-4">Updated on: {{ $place->updated_at->format('m/d/Y') }}</p>
                 <p class="text-gray-800 text-xl font-semibold mb-4">Created on: {{ $place->created_at->format('m/d/Y') }}</p>
-                <p class="text-gray-800 text-xl font-semibold mb-4">File id: {{ $place->file_id }}</p>
+                <p class="text-gray-800 text-xl font-semibold mb-4">Photo: {{ $place->file_id }}</p>
                 <p class="text-gray-800 text-xl font-semibold mb-4">Latitude: {{ $place->latitude }}</p>
                 <p class="text-gray-800 text-xl font-semibold mb-4">Longitude: {{ $place->longitude }}</p>
                 <p class="text-gray-800 text-xl font-semibold mb-4">Author: {{ $place->author->name }}</p>
@@ -18,7 +18,7 @@
                 @if($place->file)
                 <div class="mt-4">
                     <h2 class="text-gray-800 text-xl font-semibold mb-4">File Details</h2>
-                    <img src="{{ Storage::url($place->file->filepath) }}" alt="File Image" class="w-32 h-32 object-cover mb-2">
+                    <img src='{{ asset("storage/{$place->file->filepath}") }}' alt="File Image" class="w-32 h-32 object-cover mb-2">
                     <!-- <p class="text-sm text-gray-600">File Size: {{ number_format($place->file->filesize / 1024, 2) }} KB</p> -->
                 </div>
                 @endif
