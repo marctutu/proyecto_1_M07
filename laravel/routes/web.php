@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Request; 
 use App\Http\Controllers\MailController;
@@ -47,3 +47,4 @@ Route::get('mail/test', [MailController::class, 'test']);
 
 require __DIR__.'/auth.php';
 
+Route::get('/home', [HomeController::class, 'index'])->name('home');
