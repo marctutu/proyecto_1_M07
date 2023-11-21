@@ -27,7 +27,6 @@ Route::resource('places', PlaceController::class)
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
     return view('welcome');
 });
