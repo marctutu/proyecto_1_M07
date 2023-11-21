@@ -18,7 +18,7 @@
                 @if($place->file)
                 <div class="mt-4">
                     <h2 class="text-gray-800 text-xl font-semibold mb-4">File Details</h2>
-                    <img src='{{ asset("storage/{$place->file->filepath}") }}' alt="File Image" class="w-32 h-32 object-cover mb-2">
+                    <img src='{{ asset("storage/{$place->file->filepath}") }}' class="w-32 h-32 object-cover mb-2">
                     <!-- <p class="text-sm text-gray-600">File Size: {{ number_format($place->file->filesize / 1024, 2) }} KB</p> -->
                 </div>
                 @endif
