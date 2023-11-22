@@ -20,6 +20,7 @@ class PostController extends Controller
                       ->when($search, function ($query) use ($search) {
                           return $query->where('body', 'LIKE', "%{$search}%");
                       })
+                      ->withCount('liked')
                       ->paginate(5);
      
          // Pasar los posts y el término de búsqueda a la vista
@@ -80,9 +81,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::find($id);
-        $post = Post::with('author')->findOrFail($id);
-
+        $post = Post::with(['author', 'liked'])->findOrFail($id);
+    
         if ($post) {
             return view('posts.show', compact('post'));
         } else {
@@ -90,7 +90,7 @@ class PostController extends Controller
                 ->with('error', 'Post not found');
         }
     }
-
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -138,8 +138,6 @@ class PostController extends Controller
         // Redirige con un mensaje de éxito.
         return redirect()->route('posts.index')->with('success', 'Post and file successfully updated');
     }
-    
-
 
     /**
      * Remove the specified resource from storage.
@@ -150,6 +148,30 @@ class PostController extends Controller
 
         return redirect()->route('posts.index')
             ->with('success', 'Post successfully deleted');
+    }
+
+    public function like(Post $post)
+    {
+        // Verifica si el usuario actual ya dio "like" a la publicación
+        if (!$post->liked->contains(auth()->user())) {
+            // Agrega el "like" al usuario actual
+            $post->liked()->attach(auth()->user()->id);
+            return back()->with('success', 'You liked this post');
+        }
+
+        return back()->with('error', 'You already liked this post');
+    }
+
+    public function unlike(Post $post)
+    {
+        // Verifica si el usuario actual ya dio "like" a la publicación
+        if ($post->liked->contains(auth()->user())) {
+            // Quita el "like" del usuario actual
+            $post->liked()->detach(auth()->user()->id);
+            return back()->with('success', 'You unliked this post');
+        }
+
+        return back()->with('error', 'You have not liked this post');
     }
 
 }
