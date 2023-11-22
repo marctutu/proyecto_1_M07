@@ -25,10 +25,11 @@ class Post extends Model
         return $this->belongsTo(File::class);
     }   
 
-    public function likes()
+    public function liked()
     {
-        return $this->hasMany(Like::class);
+        return $this->belongsToMany(User::class, 'likes');
     }
+
 
     public function comments()
     {

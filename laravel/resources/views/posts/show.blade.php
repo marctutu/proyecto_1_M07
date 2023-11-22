@@ -1,4 +1,4 @@
-{{-- resources/views/posts/show.blade.php --}}
+<!-- resources/views/posts/show.blade.php -->
 @extends('layouts.app')
 
 @section('content')
@@ -19,13 +19,32 @@
                 </div>
                 @endif
                 
-                <div class="flex flex-wrap gap-4 justify-start">
-                    <a href="{{ route('posts.index') }}" style="background: black;" class="text-white font-bold py-2 px-4 rounded mr-2 mt-4">Back</a>
-                    <a href="{{ route('posts.edit', $post) }}" style="background: blue;" class="text-white font-bold py-2 px-4 rounded mr-2 mt-4">Edit</a>
+                <p class="text-gray-800 text-xl font-semibold mb-4">
+                    <!-- Muestra el número total de likes con estilo usando Tailwind CSS -->
+                    {{ $post->liked->count() }} Likes
+                </p>
+
+                <!-- Muestra el botón de "like" o "unlike" -->
+                @if (!$post->liked->contains(auth()->user()))
+                <form action="{{ route('posts.like', $post->id) }}" method="POST">
+                    @csrf
+                    <button type="submit" style="background:green;" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Like</button>
+                </form>
+                @else
+                <form action="{{ route('posts.unlike', $post->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Unlike</button>
+                </form>
+                @endif
+
+                <div class="flex flex-wrap gap-4 justify-start mt-4">
+                    <a href="{{ route('posts.index') }}" style="background:black;" class="bg-black text-white font-bold py-2 px-4 rounded">Back</a>
+                    <a href="{{ route('posts.edit', $post) }}" style="background:blue;" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</a>
                     <form action="{{ route('posts.destroy', $post) }}" method="POST" class="inline">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4">Delete</button>
+                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
                     </form>
                 </div>
             </div>
@@ -33,5 +52,4 @@
     </div>
 </div>
 @endsection
-
 

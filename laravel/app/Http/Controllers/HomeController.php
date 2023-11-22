@@ -15,7 +15,7 @@ class HomeController extends Controller
                       ->when($search, function ($query) use ($search) {
                           return $query->where('body', 'LIKE', "%{$search}%");
                       })
-                      ->paginate(5);
+                      ->paginate(16);
      
          // Pasar los posts y el término de búsqueda a la vista
          return view('home', compact('posts', 'search'));
