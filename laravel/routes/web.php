@@ -17,6 +17,9 @@ Route::resource('posts', PostController::class)
 Route::resource('places', PlaceController::class)
     ->middleware(['auth', 'role.any:1,3']);
 
+Route::post('posts/{post}/likes', [PostController::class, 'like'])->name('posts.like');
+Route::delete('posts/{post}/likes', [PostController::class, 'unlike'])->name('posts.unlike');
+    
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,6 +30,7 @@ Route::resource('places', PlaceController::class)
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/', function () {
     return view('welcome');
 });

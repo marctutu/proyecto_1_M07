@@ -1,4 +1,3 @@
-{{-- resources/views/posts/index.blade.php --}}
 @extends('layouts.app')
 
 @section('content')
@@ -9,7 +8,7 @@
                 <a href="{{ route('posts.create') }}" style="background-color: green;" class="text-white font-bold py-2 px-4 rounded mb-4">Crear Nuevo Post</a>
                 <form action="{{ route('posts.index') }}" method="GET" class="mb-4">
                     <div class="flex mt-4">
-                    <input type="text" name="search" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" postholder="Buscar Post" value="{{ request()->query('search') }}" autofocus>
+                        <input type="text" name="search" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" placeholder="Buscar Post" value="{{ request()->query('search') }}" autofocus>
                         <button type="submit" style="background-color: blue;" class="ml-2 text-white font-bold py-2 px-4 rounded-md">
                             Buscar
                         </button>
@@ -31,6 +30,7 @@
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created At</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Longitude</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Latitude</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Likes</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                             </tr>
                         </thead>
@@ -48,12 +48,31 @@
                                         @if($post->file)
                                             <div class="mt-4">
                                                 <img src='{{ asset("storage/{$post->file->filepath}") }}' alt="File Image" class="w-32 h-32 object-cover mb-2">
+                                            </div>
                                         @endif
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $post->author->name }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $post->created_at }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $post->longitude }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $post->latitude }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <!-- Muestra el número total de likes -->
+                                        {{ $post->liked_count }} Likes
+                                        
+                                        <!-- Muestra el botón de "like" o "unlike" -->
+                                        @if (!$post->liked->contains(auth()->user()))
+                                            <form action="{{ route('posts.like', $post->id) }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="text-green-600 hover:text-green-900">Like</button>
+                                            </form>
+                                        @else
+                                            <form action="{{ route('posts.unlike', $post->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-600 hover:text-red-900">Unlike</button>
+                                            </form>
+                                        @endif
+                                    </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <a href="{{ route('posts.show', $post->id) }}" class="text-indigo-600 hover:text-indigo-900">Ver</a>
                                         <a href="{{ route('posts.edit', $post->id) }}" class="text-indigo-600 hover:text-indigo-900">Editar</a>
@@ -62,10 +81,11 @@
                                             @method('DELETE')
                                             <button type="submit" class="text-red-600 hover:text-red-900">Eliminar</button>
                                         </form>
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="8" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">No hay posts disponibles.</td>
+                                    <td colspan="9" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">No hay posts disponibles.</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -77,5 +97,3 @@
     </div>
 </div>
 @endsection
-
-
