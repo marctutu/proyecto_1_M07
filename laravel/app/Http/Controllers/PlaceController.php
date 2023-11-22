@@ -19,14 +19,15 @@ class PlaceController extends Controller
     // Recuperem el valor de cerca de la sol·licitud
     $search = $request->input('search');
 
-    // Consultem els posts amb paginació i, si hi ha un terme de cerca, filtrarem per aquest terme
+    // Consultem els places amb paginació i, si hi ha un terme de cerca, filtrarem per aquest terme
     $places = Place::with('author')
         ->when($search, function ($query) use ($search) {
-            return $query->where('description', 'LIKE', "%{$search}%");
+            return $query->where('description', 'favorite', "%{$search}%");
         })
+        ->withCount('favorited')
         ->paginate(5);
 
-    // Passem els posts i el terme de cerca actual a la vista
+    // Passem els places i el terme de cerca actual a la vista
     return view('places.index', compact('places', 'search'));
 }
 
@@ -86,15 +87,14 @@ class PlaceController extends Controller
      */
     public function show($id)
     {
-        $place = Place::find($id); // O Place::findOrFail($id) para lanzar un error 404 si no se encuentra el lugar
+        $place = Post::with(['author', 'favorited'])->findOrFail($id);
     
-        if (!$place) {
-            // redirigir o manejar el caso de que el lugar no se encuentre
-            return redirect()->route('places.index')->with('error', 'Place not found');
+        if ($place) {
+            return view('places.show', compact('place'));
+        } else {
+            return redirect()->route('places.index')
+                ->with('error', 'Place not found');
         }
-    
-        // Asegúrate de que la variable 'place' se pasa a la vista con el nombre correcto
-        return view('places.show', compact('place'));
     }    
 
 
@@ -159,6 +159,30 @@ class PlaceController extends Controller
 
         return redirect()->route('places.index')
             ->with('success', 'Place successfully deleted');
+    }
+
+    public function favorite(Place $place)
+    {
+        // Verifica si el usuario actual ya dio "favorite" a la publicación
+        if (!$place->favorited->contains(auth()->user())) {
+            // Agrega el "favorite" al usuario actual
+            $place->favorited()->attach(auth()->user()->id);
+            return back()->with('success', 'You favorited this place');
+        }
+
+        return back()->with('error', 'You already favorited this place');
+    }
+
+    public function unfavorite(Place $place)
+    {
+        // Verifica si el usuario actual ya dio "favorite" a la publicación
+        if ($place->favorited->contains(auth()->user())) {
+            // Quita el "favorite" del usuario actual
+            $place->favorited()->detach(auth()->user()->id);
+            return back()->with('success', 'You unfavorited this place');
+        }
+
+        return back()->with('error', 'You have not favorited this place');
     }
 
 }
