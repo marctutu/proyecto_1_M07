@@ -87,7 +87,7 @@ class PlaceController extends Controller
      */
     public function show($id)
     {
-        $place = Post::with(['author', 'favorited'])->findOrFail($id);
+        $place = Place::with(['author', 'favorited'])->findOrFail($id);
     
         if ($place) {
             return view('places.show', compact('place'));

@@ -27,6 +27,7 @@
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Author</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created At</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Updated At</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Favorites</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
@@ -53,6 +54,24 @@
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $place->created_at->toFormattedDateString() }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $place->updated_at->toFormattedDateString() }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <!-- Muestra el número total de favorites -->
+                                        {{ $place->favorited_count }} Favorites
+                                        
+                                        <!-- Muestra el botón de "favorite" o "unfavorite" -->
+                                        @if (!$place->favorited->contains(auth()->user()))
+                                            <form action="{{ route('places.favorite', $place->id) }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="text-green-600 hover:text-green-900">Favorite</button>
+                                            </form>
+                                        @else
+                                            <form action="{{ route('places.unfavorite', $place->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-600 hover:text-red-900">UnFavorite</button>
+                                            </form>
+                                        @endif
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                     <a href="{{ route('places.show', $place->id) }}" class="text-indigo-600 hover:text-indigo-900">Ver</a>
                                     <a href="{{ route('places.edit', $place->id) }}" class="text-indigo-600 hover:text-indigo-900">Editar</a>
                                     <form action="{{ route('places.destroy', $place->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro?');">

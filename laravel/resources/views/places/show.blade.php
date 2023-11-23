@@ -22,6 +22,25 @@
                     <!-- <p class="text-sm text-gray-600">File Size: {{ number_format($place->file->filesize / 1024, 2) }} KB</p> -->
                 </div>
                 @endif
+
+                <p class="text-gray-800 text-xl font-semibold mb-4">
+                    <!-- Muestra el número total de favorites con estilo usando Tailwind CSS -->
+                    {{ $place->favorited->count() }} Favorited
+                </p>
+
+                <!-- Muestra el botón de "favorite" o "unfavorite" -->
+                @if (!$place->favorited->contains(auth()->user()))
+                <form action="{{ route('places.favorite', $place->id) }}" method="POST">
+                    @csrf
+                    <button type="submit" style="background:green;" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Favorite</button>
+                </form>
+                @else
+                <form action="{{ route('places.unfavorite', $place->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Unfavorite</button>
+                </form>
+                @endif
                 
                 <div class="flex flex-wrap gap-4 justify-start">
                     <a href="{{ route('places.index') }}" style="background-color: black;" class="text-white font-bold py-2 px-4 rounded mr-2 mt-4">Back</a>
