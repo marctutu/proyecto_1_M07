@@ -45,7 +45,7 @@
                            <div>
                               @if($post->file)
                                  <div class="relative">
-                                       <img src='{{ asset("storage/{$post->file->filepath}") }}' alt="File Image" class="w-44 h-40">
+                                       <img src='{{ asset("storage/{$post->file->filepath}") }}' alt="File Image" class="w-80 h-80">
                                        <div class="absolute top-0 left-0 bg-white p-2">
                                           <p>{{ $post->author->name }}</p>
                                        </div>
