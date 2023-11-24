@@ -1,18 +1,18 @@
 <!-- resources/views/geomir.blade.php -->
 <x-geomir-layout>
    @section('content')
-      <div class="h-screen bg-white">
+      <div class="h-screen" style="background-color: #CEB5DD;">
 
          <!-- Menú superior con línea horizontal -->
          
-         <div class="bg-white-500 text-black p-4 py-6 relative">
+         <div class="bg-white-500 text-black relative">
             <div class="container mx-auto flex justify-center items-center">
-               <div class="font-bold">Logo</div>
+               <img class="h-20" src='{{ asset("/img/prism_social-removebg-preview.png") }}'></img>
             </div>
 
             <!-- Línea horizontal -->
 
-            <hr class="absolute bottom-0 left-5 right-5 border-t-2 border-black rounded-full">
+            <hr class="absolute bottom-0 left-5 right-5 border-t-2 border-purple-800 rounded-full" >
          </div>
 
          <!-- Segundo menú con línea horizontal y desplazamiento hacia abajo -->
@@ -28,7 +28,7 @@
 
             <!-- Línea horizontal -->
 
-            <hr class="absolute bottom-0 left-0 right-0 border-t-2 border-black rounded-full mt-5">
+            <hr class="absolute bottom-0 left-0 right-0 border-t-2 border-purple-800 rounded-full mt-5">
          </div>
 
          <!-- Contenido principal -->
@@ -37,19 +37,20 @@
 
             <!-- Imagen a la izquierda -->
 
-            <div class=" border-r-2 border-black" style="width: 40%;">
+            <div class=" border-r-2 border-purple-800" style="width: 40%;">
                <div id="place-container" class="place-container">
                   @forelse ($places as $index => $place)
-                     <div onclick="openPlaceDetails('{{ route('places.show', $place->id) }}', event)" class="place-slide" style="display: {{ $index === 0 ? 'block' : 'none' }}">                           <!-- Contenido de la publicación -->
+                     <div onclick="openPlaceDetails('{{ route('places.show', $place->id) }}', event)" class="mr-6 place-slide" style="display: {{ $index === 0 ? 'block' : 'none' }}">                           <!-- Contenido de la publicación -->
                            <div>
                               @if($place->file)
                                  <div class="relative">
-                                       <img src='{{ asset("storage/{$place->file->filepath}") }}' alt="File Image" class="relative pr-6" style="width: 100%; height: 500px;">
-                                       <div class="absolute top-0 left-0 bg-white p-2">
-                                          <p>{{ $place->author->name }}</p>
+                                       <img src='{{ asset("storage/{$place->file->filepath}") }}' alt="File Image" class="relative" style="width: 100%; height: 500px;">
+                                       <div class="border-2 rounded-3xl absolute top-0 m-2 left-0 flex flex-row" style="background-color: #D583F1; border-color: #8A72AA;">
+                                          <img class="h-8" src='{{ asset("/img/user trans.png") }}'></img>
+                                          <p class= "pt-1 pr-2">{{ $place->author->name }}</p>
                                        </div>
                                        <button id="prev-place" class="no-redirect absolute top-1/2 left-0 bg-white p-2" onclick="changePlace(-1)">Anterior</button>
-                                       <button id="next-place" class="no-redirect absolute top-1/2 right-0 pr-6 bg-white pl-2 pt-2 pb-2" onclick="changePlace(1)">Siguiente</button>
+                                       <button id="next-place" class="no-redirect absolute top-1/2 right-0 bg-white p-2" onclick="changePlace(1)">Siguiente</button>
                                  </div>
                               @endif
                            </div>
@@ -68,7 +69,7 @@
 
             <!-- Contenedor de imágenes a la derecha -->
 
-            <div class="pl-8 border-r-2 border-black" style="width: 50%;">
+            <div class="pl-8 border-r-2 border-purple-800" style="width: 50%;">
                <!-- Fila 1 -->
                   <div class="flex flex-wrap">
                      @forelse ($posts as $index => $post)
@@ -77,8 +78,9 @@
                               @if($post->file)
                                  <div class="relative">
                                        <img src='{{ asset("storage/{$post->file->filepath}") }}' alt="File Image" class="w-44 h-40">
-                                       <div class="absolute top-0 left-0 bg-white p-2">
-                                          <p>{{ $post->author->name }}</p>
+                                       <div class="border-2 rounded-3xl absolute top-0 m-2 left-0 flex flex-row" style="background-color: #D583F1; border-color: #8A72AA;">
+                                          <img class="h-6" src='{{ asset("/img/user trans.png") }}'></img>
+                                          <p class= "pb-1 pr-2">{{ $place->author->name }}</p>
                                        </div>
                                  </div>
                               @endif
@@ -97,15 +99,15 @@
                   </div>
             </div>
             <div class="pl-8" style="width: 10%;">
-               <div class="container px-10 flex-col space-y-40">
+               <div class="container flex-col space-y-40">
                   <div class="pt-10">
-                     <a href="#" class="block py-2 hover:underline">Likes</a>
+                     <img class="h-16 pl-10" src='{{ asset("/img/likes morado fill.png") }}'></img>
                   </div>
                   <div>
-                     <a href="#" class="block py-2 hover:underline">Account</a>
+                     <img class="h-16 pl-8" src='{{ asset("/img/user trans.png") }}'></img>
                   </div>
                   <div class="pb-10">
-                     <a href="#" class="block py-2 hover:underline">Favs</a>
+                     <img class="h-16 pl-10" src='{{ asset("/img/favorites morado fill de verdad.png") }}'></img>
                   </div>
                   
                </div>
