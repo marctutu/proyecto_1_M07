@@ -4,20 +4,29 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\File;
 use App\Models\Post;
+use App\Models\Place;
 
 class HomeController extends Controller
 {
     public function index(Request $request)
-{
-    $search = $request->input('search');
-     
-         $posts = Post::with('author')
-                      ->when($search, function ($query) use ($search) {
-                          return $query->where('body', 'LIKE', "%{$search}%");
-                      })
-                      ->paginate(16);
-     
-         // Pasar los posts y el término de búsqueda a la vista
-         return view('home', compact('posts', 'search'));
-}
+    {
+        $search = $request->input('search');
+    
+        $posts = Post::with('author')
+            ->when($search, function ($query) use ($search) {
+                return $query->where('body', 'LIKE', "%{$search}%");
+            })
+            ->paginate(16);
+    
+        $places = Place::with('author')
+            ->when($search, function ($query) use ($search) {
+                return $query->where('description', 'LIKE', "%{$search}%");
+            })
+            ->paginate(5);
+    
+        // Pasar los posts y places, y el término de búsqueda a la vista
+        return view('home', compact('posts', 'places', 'search'));
+    }
+    
+
 }

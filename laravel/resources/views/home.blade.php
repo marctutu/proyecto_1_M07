@@ -37,32 +37,32 @@
 
             <!-- Imagen a la izquierda -->
 
-            <div class="relative border-r-2 border-black" style="width: 40%;">
-               <div id="post-container" class="post-container">
-                  @forelse ($posts as $index => $post)
-                     <div class="post-slide" style="display: {{ $index === 0 ? 'block' : 'none' }}">
-                           <!-- Contenido de la publicación -->
+            <div class=" border-r-2 border-black" style="width: 40%;">
+               <div id="place-container" class="place-container">
+                  @forelse ($places as $index => $place)
+                     <div onclick="openPlaceDetails('{{ route('places.show', $place->id) }}', event)" class="place-slide" style="display: {{ $index === 0 ? 'block' : 'none' }}">                           <!-- Contenido de la publicación -->
                            <div>
-                              @if($post->file)
+                              @if($place->file)
                                  <div class="relative">
-                                       <img src='{{ asset("storage/{$post->file->filepath}") }}' alt="File Image" class="w-80 h-80">
+                                       <img src='{{ asset("storage/{$place->file->filepath}") }}' alt="File Image" class="relative pr-6" style="width: 100%; height: 500px;">
                                        <div class="absolute top-0 left-0 bg-white p-2">
-                                          <p>{{ $post->author->name }}</p>
+                                          <p>{{ $place->author->name }}</p>
                                        </div>
+                                       <button id="prev-place" class="no-redirect absolute top-1/2 left-0 bg-white p-2" onclick="changePlace(-1)">Anterior</button>
+                                       <button id="next-place" class="no-redirect absolute top-1/2 right-0 pr-6 bg-white pl-2 pt-2 pb-2" onclick="changePlace(1)">Siguiente</button>
                                  </div>
                               @endif
                            </div>
+
                            <div>
-                              <a href="{{ route('posts.show', $post->id) }}">{{ strlen($post->body) > 20 ? substr($post->body, 0, 20) . '...' : $post->body }}</a>
+                              <p>{{ strlen($place->description) > 20 ? substr($place->description, 0, 200) . '...' : $place->description }}</p>
                            </div>
+                           
                      </div>
                   @empty
-                     <div class="w-full px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">No hay posts disponibles.</div>
+                     <div class="w-full px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">No hay places disponibles.</div>
                   @endforelse
 
-                  <!-- Botones de navegación -->
-                  <button id="prev-post" onclick="changePost(-1)">Anterior</button>
-                  <button id="next-post" onclick="changePost(1)">Siguiente</button>
                </div>
             </div>
 
@@ -84,7 +84,7 @@
                               @endif
                            </div>
                            <div>
-                              <a href="{{ route('posts.show', $post->id) }}">{{ strlen($post->body) > 20 ? substr($post->body, 0, 20) . '...' : $post->body }}</a>
+                              <p>{{ strlen($post->body) > 20 ? substr($post->body, 0, 20) . '...' : $post->body }}</p>
                            </div>
                         </div>
                @if(($index + 1) % 4 == 0)
@@ -114,23 +114,35 @@
       </div>
       <script>
          // Índice de la publicación actual
-         let currentPostIndex = 0;
+         let currentPlaceIndex = 0;
 
          // Función para cambiar de publicación
-         function changePost(direction) {
-            const posts = document.querySelectorAll('.post-slide');
-            currentPostIndex += direction;
+         function changePlace(direction) {
+            const places = document.querySelectorAll('.place-slide');
+            currentPlaceIndex += direction;
 
             // Verificar límites
-            if (currentPostIndex < 0) {
-                  currentPostIndex = posts.length - 1;
-            } else if (currentPostIndex >= posts.length) {
-                  currentPostIndex = 0;
+            if (currentPlaceIndex < 0) {
+                  currentPlaceIndex = places.length - 1;
+            } else if (currentPlaceIndex >= places.length) {
+                  currentPlaceIndex = 0;
             }
 
-            // Ocultar todas las publicaciones y mostrar la actual
-            posts.forEach(post => post.style.display = 'none');
-            posts[currentPostIndex].style.display = 'block';
+            // Ocultar todas las publicaciones y mlacerar la actual
+            places.forEach(place => place.style.display = 'none');
+            places[currentPlaceIndex].style.display = 'block';
+         }
+         function openPlaceDetails(route, event) {
+            // Verifica si el evento se originó en un elemento con la clase "no-redirect"
+            if (event.target.classList.contains('no-redirect')) {
+                  // Si es un botón que no debe redireccionar, no hagas nada
+                  return;
+            }
+
+            // Evita la propagación del evento al contenedor padre
+            event.stopPropagation();
+            // Realiza la acción de redireccionamiento
+            window.open(route);
          }
       </script>
 
