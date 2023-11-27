@@ -1,7 +1,7 @@
 <!-- resources/views/geomir.blade.php -->
 <x-geomir-layout>
    @section('content')
-      <div class="h-screen" style="background-color: #CEB5DD;">
+      <div class="" style="background-color: #CEB5DD;">
 
          <!-- Menú superior con línea horizontal -->
          
@@ -55,8 +55,8 @@
                               @endif
                            </div>
 
-                           <div>
-                              <p>{{ strlen($place->description) > 20 ? substr($place->description, 0, 200) . '...' : $place->description }}</p>
+                           <div style="background-color: #ECCFFF;">
+                              <p class="pl-1">{{ strlen($place->description) > 20 ? substr($place->description, 0, 200) . '...' : $place->description }}</p>
                            </div>
                            
                      </div>
@@ -73,20 +73,22 @@
                <!-- Fila 1 -->
                   <div class="flex flex-wrap">
                      @forelse ($posts as $index => $post)
-                        <div class="w-1/4 mb-4">
-                           <div>
-                              @if($post->file)
-                                 <div class="relative">
-                                       <img src='{{ asset("storage/{$post->file->filepath}") }}' alt="File Image" class="w-44 h-40">
-                                       <div class="border-2 rounded-3xl absolute top-0 m-2 left-0 flex flex-row" style="background-color: #D583F1; border-color: #8A72AA;">
-                                          <img class="h-6" src='{{ asset("/img/user trans.png") }}'></img>
-                                          <p class= "pb-1 pr-2">{{ $place->author->name }}</p>
-                                       </div>
-                                 </div>
-                              @endif
-                           </div>
-                           <div>
-                              <p>{{ strlen($post->body) > 20 ? substr($post->body, 0, 20) . '...' : $post->body }}</p>
+                        <div class="w-1/4 mb-4 pr-11">
+                           <div class= "border-8 rounded-md" style="border-color: #8A72AA;">
+                              <div>
+                                 @if($post->file)
+                                    <div class="relative">
+                                          <img src='{{ asset("storage/{$post->file->filepath}") }}' alt="File Image" class="w-44 h-40">
+                                          <div class="border-2 rounded-3xl absolute top-0 m-2 left-0 flex flex-row" style="background-color: #D583F1; border-color: #8A72AA;">
+                                             <img class="h-6" src='{{ asset("/img/user trans.png") }}'></img>
+                                             <p class= "pb-1 pr-2">{{ $place->author->name }}</p>
+                                          </div>
+                                    </div>
+                                 @endif
+                              </div>
+                              <div style="background-color: #ECCFFF;">
+                                 <p class="pl-1">{{ strlen($post->body) > 20 ? substr($post->body, 0, 20) . '...' : $post->body }}</p>
+                              </div>
                            </div>
                         </div>
                @if(($index + 1) % 4 == 0)
