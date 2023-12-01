@@ -51,7 +51,13 @@
                                             </div>
                                         @endif
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $post->author->name }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        @if ($post->author)
+                                            {{ $post->author->name }}
+                                        @else
+                                            Autor desconocido
+                                        @endif
+                                    </td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $post->created_at }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $post->longitude }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $post->latitude }}</td>

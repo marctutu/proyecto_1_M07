@@ -12,6 +12,8 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Livewire\TemporaryUploadedFile;
+
 
 class FileResource extends Resource
 {
@@ -24,14 +26,18 @@ class FileResource extends Resource
         return $form
             ->schema([
                 Forms\Components\FileUpload::make('filepath') // Es crea un component d'upload de fitxers per al camp "filepath".
-                    ->required() // camp obligatori
-                    ->image() // només accepta imatges
-                    ->maxSize(2048) // tamany màxim del fitxer a 2048kb
-                    ->directory('uploads') // directori on es guarden els fitxers
-                    ->getUploadedFileNameForStorageUsing(function (Livewire\TemporaryUploadedFile $file): string {
-                        return time() . '_' . $file->getClientOriginalName(); // funció per generar un nom de fitxer únic per al fitxer carregat.
+                    ->required()
+                    ->image()
+                    ->maxSize(2048)
+                    ->directory('uploads')
+                    ->getUploadedFileNameForStorageUsing(function ($file) {
+                        if ($file instanceof Livewire\TemporaryUploadedFile) {
+                            return time() . '_' . $file->getClientOriginalName();
+                        }
+                        return '';
                     }),
-
+                    
+                
                 // Forms\Components\TextInput::make('filesize')
                 //     ->required(),
             ]);

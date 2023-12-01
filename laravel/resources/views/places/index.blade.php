@@ -50,7 +50,13 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $place->latitude }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $place->longitude }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $place->author->name }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @if ($place->author)
+                                        {{ $place->author->name }}
+                                    @else
+                                        Autor desconocido
+                                    @endif
+                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $place->created_at->toFormattedDateString() }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $place->updated_at->toFormattedDateString() }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
