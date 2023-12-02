@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PlaceController;
+use App\Http\Controllers\LanguageController;
+
+Route::get('/language/{locale}', [LanguageController::class, 'language'])->name('language');
 
 Route::resource('files', FileController::class)
     ->middleware(['auth']);
