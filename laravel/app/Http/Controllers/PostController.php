@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(Post::class, 'post');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -71,16 +76,9 @@ class PostController extends Controller
             ->with('success', 'Post successfully created');
     }
 
-    
-
-
-    /**
-     * Display the specified resource.
-     */
-    public function show($id)
+    public function show(Post $post)
     {
-        $post = Post::with(['author', 'liked'])->findOrFail($id);
-    
+        // No necesitas buscar el post, ya que se inyecta automáticamente.
         if ($post) {
             return view('posts.show', compact('post'));
         } else {
@@ -88,6 +86,7 @@ class PostController extends Controller
                 ->with('error', 'Post not found');
         }
     }
+
     
 
     /**
@@ -150,6 +149,7 @@ class PostController extends Controller
 
     public function like(Post $post)
     {
+        $this->authorize('like', $post);
         // Verifica si el usuario actual ya dio "like" a la publicación
         if (!$post->liked->contains(auth()->user())) {
             // Agrega el "like" al usuario actual
@@ -162,6 +162,7 @@ class PostController extends Controller
 
     public function unlike(Post $post)
     {
+        $this->authorize('unlike', $post);
         // Verifica si el usuario actual ya dio "like" a la publicación
         if ($post->liked->contains(auth()->user())) {
             // Quita el "like" del usuario actual

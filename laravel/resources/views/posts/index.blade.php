@@ -5,8 +5,10 @@
     <div class="max-w-9xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 bg-white border-b border-gray-200">
-                <a href="{{ route('posts.create') }}" style="background-color: green;" class="text-white font-bold py-2 px-4 rounded mb-4">Crear Nuevo Post</a>
-                <form action="{{ route('posts.index') }}" method="GET" class="mb-4">
+                @can('create', App\Models\Post::class)
+                    <a href="{{ route('posts.create') }}" style="background-color: green;" class="text-white font-bold py-2 px-4 rounded mb-4">Crear Nuevo Post</a>
+                @endcan
+                    <form action="{{ route('posts.index') }}" method="GET" class="mb-4">
                     <div class="flex mt-4">
                         <input type="text" name="search" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" placeholder="Buscar Post" value="{{ request()->query('search') }}" autofocus>
                         <button type="submit" style="background-color: blue;" class="ml-2 text-white font-bold py-2 px-4 rounded-md">
@@ -67,26 +69,35 @@
                                         
                                         <!-- Muestra el botón de "like" o "unlike" -->
                                         @if (!$post->liked->contains(auth()->user()))
-                                            <form action="{{ route('posts.like', $post->id) }}" method="POST">
-                                                @csrf
-                                                <button type="submit" class="text-green-600 hover:text-green-900">Like</button>
-                                            </form>
+                                            @can('like', $post)
+                                                <form action="{{ route('posts.like', $post->id) }}" method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="text-green-600 hover:text-green-900">Like</button>
+                                                </form>
+                                            @endcan
                                         @else
-                                            <form action="{{ route('posts.unlike', $post->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="text-red-600 hover:text-red-900">Unlike</button>
-                                            </form>
+                                            @can('unlike', $post)
+                                                <form action="{{ route('posts.unlike', $post->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-red-600 hover:text-red-900">Unlike</button>
+                                                </form>
+                                            @endcan
                                         @endif
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <a href="{{ route('posts.show', $post->id) }}" class="text-indigo-600 hover:text-indigo-900">Ver</a>
-                                        <a href="{{ route('posts.edit', $post->id) }}" class="text-indigo-600 hover:text-indigo-900">Editar</a>
-                                        <form action="{{ route('posts.destroy', $post->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="text-red-600 hover:text-red-900">Eliminar</button>
-                                        </form>
+                                        {{-- Comprobar si el usuario puede editar el post --}}
+                                        @can('update', $post)
+                                            <a href="{{ route('posts.edit', $post->id) }}" class="text-indigo-600 hover:text-indigo-900 ml-4">Editar</a>
+                                        @endcan
+                                        @can('delete', $post)
+                                            <form action="{{ route('posts.destroy', $post->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro?');" class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-600 hover:text-red-900 ml-4">Eliminar</button>
+                                            </form>
+                                        @endcan
                                     </td>
                                 </tr>
                             @empty

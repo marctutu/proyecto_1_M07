@@ -26,26 +26,34 @@
 
                 <!-- Muestra el botón de "like" o "unlike" -->
                 @if (!$post->liked->contains(auth()->user()))
-                <form action="{{ route('posts.like', $post->id) }}" method="POST">
-                    @csrf
-                    <button type="submit" style="background:green;" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Like</button>
-                </form>
+                    @can('like', $post)
+                        <form action="{{ route('posts.like', $post->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" style="background:green;" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Like</button>
+                        </form>
+                    @endcan
                 @else
-                <form action="{{ route('posts.unlike', $post->id) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Unlike</button>
-                </form>
+                    @can('unlike', $post)
+                        <form action="{{ route('posts.unlike', $post->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Unlike</button>
+                        </form>
+                    @endcan
                 @endif
 
                 <div class="flex flex-wrap gap-4 justify-start mt-4">
                     <a href="{{ route('posts.index') }}" style="background:black;" class="bg-black text-white font-bold py-2 px-4 rounded">Back</a>
-                    <a href="{{ route('posts.edit', $post) }}" style="background:blue;" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</a>
-                    <form action="{{ route('posts.destroy', $post) }}" method="POST" class="inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
-                    </form>
+                    @can('update', $post)
+                        <a href="{{ route('posts.edit', $post) }}" style="background:blue;" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</a>
+                    @endcan
+                    @can('delete', $post)
+                        <form action="{{ route('posts.destroy', $post) }}" method="POST" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+                        </form>
+                    @endcan
                 </div>
             </div>
         </div>
