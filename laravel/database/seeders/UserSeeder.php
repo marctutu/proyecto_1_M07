@@ -14,26 +14,25 @@ class UserSeeder extends Seeder
     {
         User::create([
             'name' => 'admin',
-            'email' => 'admin@fp.insjoaquimmir.cat',
+            'email' => 'admin@admin.com',
             'password' => Hash::make('123456789'),
             'role_id' => 3,  // Asigna el rol admin
         ]);
+
+        User::create([
+            'name' => 'editor',
+            'email' => 'editor@editor.com',
+            'password' => Hash::make('123456789'),
+            'role_id' => 2,  // Asigna el rol admin
+        ]);
+
+        User::create([
+            'name' => 'author',
+            'email' => 'author@author.com',
+            'password' => Hash::make('123456789'),
+            'role_id' => 1,  // Asigna el rol admin
+        ]);
+
+        
     }
 }
-/* Parte de abajo es la orginal del fichero */
-
-/*namespace Database\Seeders;
-
-/*use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-/*use Illuminate\Database\Seeder;
-
-/*class UserSeeder extends Seeder
-/*{
-    /**
-     * Run the database seeds.
-     */
-/*    public function run(): void */
-   /* {*/
-        //
-/*    }*/
-/*}*/
