@@ -9,13 +9,13 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\PlaceController;
 
 Route::resource('files', FileController::class)
-    ->middleware(['auth', 'role.any:1,3']);
+    ->middleware(['auth']);
 
 Route::resource('posts', PostController::class)
-    ->middleware(['auth', 'role.any:1,3']);
+    ->middleware(['auth']);
 
 Route::resource('places', PlaceController::class)
-    ->middleware(['auth', 'role.any:1,3']);
+    ->middleware(['auth']);
 
 Route::post('posts/{post}/likes', [PostController::class, 'like'])->name('posts.like');
 Route::delete('posts/{post}/likes', [PostController::class, 'unlike'])->name('posts.unlike');
