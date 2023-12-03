@@ -32,6 +32,16 @@
                             Cancel
                         </a>
                     </div>
+                    @if (session('success'))
+                        <div class="mb-4 text-sm">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if (session('error'))
+                        <div class="mb-4 text-smr">    
+                            {{ session('error') }}
+                        </div>
+                    @endif
                 </form>
             </div>
         </div>

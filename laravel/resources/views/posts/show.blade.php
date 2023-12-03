@@ -54,6 +54,16 @@
                             <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
                         </form>
                     @endcan
+                    @if (session('success'))
+                        <div class="mb-4 text-sm">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if (session('error'))
+                        <div class="mb-4 text-smr">    
+                            {{ session('error') }}
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
