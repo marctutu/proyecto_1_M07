@@ -1,116 +1,62 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="py-12">
-    <div class="max-w-9xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-            <div class="p-6 bg-white border-b border-gray-200">
-                @can('create', App\Models\Post::class)
-                    <a href="{{ route('posts.create') }}" style="background-color: green;" class="text-white font-bold py-2 px-4 rounded mb-4">Crear Nuevo Post</a>
-                @endcan
-                    <form action="{{ route('posts.index') }}" method="GET" class="mb-4">
-                    <div class="flex mt-4">
-                        <input type="text" name="search" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" placeholder="Buscar Post" value="{{ request()->query('search') }}" autofocus>
-                        <button type="submit" style="background-color: blue;" class="ml-2 text-white font-bold py-2 px-4 rounded-md">
-                            Buscar
-                        </button>
-                    </div>
-                </form>
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+<body class="bg-purple-300 ">
+    <!-- Fija la barra de navegación en la parte superior -->
+    <nav class="fixed top-5 inset-x-0 bg-purple-300 text-black p-4 z-50">
+        <div class="flex justify-between items-center">
+            <!-- Enlaces de navegación -->
+            <div class="flex space-x-8">
+                <a href="#" class="text-white hover:text-purple-300">Home</a>
+                <a href="#" class="text-white hover:text-purple-300">Explore</a>
+                <a href="#" class="text-white hover:text-purple-300">Chat</a>
+                <a href="#" class="text-white hover:text-purple-300">New Post</a>
+            </div>
+
+            <!-- Centrar el logotipo en la barra de navegación -->
+            <div>
+                <a href="#" class="text-white hover:text-purple-300">
+                    <!-- Inserta aquí tu logotipo -->
+                </a>
+            </div>
+
+            <!-- Lado derecho vacío para centrar el logo -->
+            <div></div>
+        </div>
+    </nav>
+
+    <!-- Nombre del autor bajo la barra de navegación
+    @if(isset($posts) && $posts->isNotEmpty())
+    <div class="fixed top-16 inset-x-0 bg-purple-300 p-2 z-40 text-black text-center">
+        {{ $posts->first()->author->name ?? 'Autor desconocido' }}
+    </div>
+    @endif -->
+
+    <!-- Agregar un padding-top para compensar la barra de navegación fija y el nombre del autor -->
+    <div class="pt-32 bg-gray-100 py-12">
+        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white shadow-sm sm:rounded-lg">
+                <!-- Estilo de la cuadrícula de posts -->
+                <div class="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    @foreach ($posts as $post)
+                        <div class="border rounded-lg overflow-hidden bg-white">
+                            <p class="text-xs text-gray-600">Por {{ $post->author->name ?? 'Autor desconocido' }}</p>
+                            <img src="{{ asset("storage/{$post->file->filepath}") }}" alt="Imagen del post" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <p class="text-sm truncate">{{ $post->body }}</p>
+                                <p class="text-xs text-gray-600">Por {{ $post->author->name ?? 'Autor desconocido' }}</p>
+                            </div>
                         </div>
-                    @endif
-                    <table class="min-w-full divide-y divide-gray-200 mt-4">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Body</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Photo</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Author</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created At</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Longitude</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Latitude</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Likes</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            @forelse ($posts as $post)
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $post->id }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        {{ strlen($post->body) > 20 ? substr($post->body, 0, 20) . '...' : $post->body }}
-                                        @if(strlen($post->body) > 20)
-                                            <a href="{{ route('posts.show', $post->id) }}" class="text-indigo-600 hover:text-indigo-900">Ver más</a>
-                                        @endif
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        @if($post->file)
-                                            <div class="mt-4">
-                                                <img src='{{ asset("storage/{$post->file->filepath}") }}' alt="File Image" class="w-32 h-32 object-cover mb-2">
-                                            </div>
-                                        @endif
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        @if ($post->author)
-                                            {{ $post->author->name }}
-                                        @else
-                                            Autor desconocido
-                                        @endif
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $post->created_at }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $post->longitude }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $post->latitude }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <!-- Muestra el número total de likes -->
-                                        {{ $post->liked_count }} Likes
-                                        
-                                        <!-- Muestra el botón de "like" o "unlike" -->
-                                        @if (!$post->liked->contains(auth()->user()))
-                                            @can('like', $post)
-                                                <form action="{{ route('posts.like', $post->id) }}" method="POST">
-                                                    @csrf
-                                                    <button type="submit" class="text-green-600 hover:text-green-900">Like</button>
-                                                </form>
-                                            @endcan
-                                        @else
-                                            @can('unlike', $post)
-                                                <form action="{{ route('posts.unlike', $post->id) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="text-red-600 hover:text-red-900">Unlike</button>
-                                                </form>
-                                            @endcan
-                                        @endif
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="{{ route('posts.show', $post->id) }}" class="text-indigo-600 hover:text-indigo-900">Ver</a>
-                                        {{-- Comprobar si el usuario puede editar el post --}}
-                                        @can('update', $post)
-                                            <a href="{{ route('posts.edit', $post->id) }}" class="text-indigo-600 hover:text-indigo-900 ml-4">Editar</a>
-                                        @endcan
-                                        @can('delete', $post)
-                                            <form action="{{ route('posts.destroy', $post->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro?');" class="inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="text-red-600 hover:text-red-900 ml-4">Eliminar</button>
-                                            </form>
-                                        @endcan
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="9" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">No hay posts disponibles.</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                    @endforeach
+                </div>
+
+                <!-- Estilos de la paginación -->
+                <div class="py-6">
                     {{ $posts->appends(['search' => request()->query('search')])->links() }}
                 </div>
             </div>
         </div>
     </div>
-</div>
+</body>
 @endsection
+

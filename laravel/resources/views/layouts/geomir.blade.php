@@ -1,48 +1,154 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<!-- resources/views/geomir.blade.php -->
+<x-geomir-layout>
+   @section('content')
+      <div class="" style="background-color: #CEB5DD;">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+         <!-- Menú superior con línea horizontal -->
+         
+         <div class="bg-white-500 text-black relative">
+            <div class="container mx-auto flex justify-center items-center">
+               <img class="h-20" src='{{ asset("/img/prism_social-removebg-preview.png") }}'></img>
+            </div>
 
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+            <!-- Línea horizontal -->
 
-        <!-- Scripts -->
-        <!-- Styles and scripts -->
-        @env(['local','development'])
-            @vite(['resources/css/app.css', 'resources/js/app.js'])
-        @endenv
-        @env(['production'])
-            @php
-                $manifest = json_decode(file_get_contents(public_path('build/manifest.json')), true);
-            @endphp
-            <link rel="stylesheet" href="{{ asset('build/'.$manifest['resources/css/app.css']['file']) }}">
-            <script type="module" src="{{ asset('build/'.$manifest['resources/js/app.js']['file']) }}"></script>
-        @endenv
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @include('layouts.navigation')
+            <hr class="absolute bottom-0 left-5 right-5 border-t-2 border-purple-800 rounded-full" >
+         </div>
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
+         <!-- Segundo menú con línea horizontal y desplazamiento hacia abajo -->
 
-            <!-- Page Content -->
-            <main>
-                @yield('content')
-            </main>
-        </div>
-    </body>
-</html>
+         <div class="bg-white-300 p-4 py-6 relative">
+            <div class="container mx-auto px-10 flex justify-between">
+               <a href="#" class="px-4 hover:underline">Home</a>
+               <a href="#" class="px-4 hover:underline">Explore</a>
+               <a href="#" class="px-4 hover:underline">Chat</a>
+               <a href="#" class="px-4 hover:underline">New post</a>
+               <a href="#" class="px-4 hover:underline">New Place</a>
+            </div>
+
+            <!-- Línea horizontal -->
+
+            <hr class="absolute bottom-0 left-0 right-0 border-t-2 border-purple-800 rounded-full mt-5">
+         </div>
+
+         <!-- Contenido principal -->
+
+         <div class="w-full p-4 py-6 relative flex">
+
+            <!-- Imagen a la izquierda -->
+
+            <div class=" border-r-2 border-purple-800" style="width: 40%;">
+               <div id="place-container" class="place-container">
+                  @forelse ($places as $index => $place)
+                     <div onclick="openPlaceDetails('{{ route('places.show', $place->id) }}', event)" class="mr-6 place-slide" style="display: {{ $index === 0 ? 'block' : 'none' }}">                           <!-- Contenido de la publicación -->
+                           <div>
+                              @if($place->file)
+                                 <div class="relative">
+                                       <img src='{{ asset("storage/{$place->file->filepath}") }}' alt="File Image" class="relative" style="width: 100%; height: 500px;">
+                                       <div class="border-2 rounded-3xl absolute top-0 m-2 left-0 flex flex-row" style="background-color: #D583F1; border-color: #8A72AA;">
+                                          <img class="h-8" src='{{ asset("/img/user trans.png") }}'></img>
+                                          <p class= "pt-1 pr-2">{{ $place->author->name }}</p>
+                                       </div>
+                                       <button id="prev-place" class="no-redirect absolute top-1/2 left-0 bg-white p-2" onclick="changePlace(-1)">Anterior</button>
+                                       <button id="next-place" class="no-redirect absolute top-1/2 right-0 bg-white p-2" onclick="changePlace(1)">Siguiente</button>
+                                 </div>
+                              @endif
+                           </div>
+
+                           <div style="background-color: #ECCFFF;">
+                              <p class="pl-1">{{ strlen($place->description) > 20 ? substr($place->description, 0, 200) . '...' : $place->description }}</p>
+                           </div>
+                           
+                     </div>
+                  @empty
+                     <div class="w-full px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">No hay places disponibles.</div>
+                  @endforelse
+
+               </div>
+            </div>
+
+            <!-- Contenedor de imágenes a la derecha -->
+
+            <div class="pl-8 border-r-2 border-purple-800" style="width: 50%;">
+               <!-- Fila 1 -->
+                  <div class="flex flex-wrap">
+                     @forelse ($posts as $index => $post)
+                        <div class="w-1/4 mb-4 pr-11">
+                           <div class= "border-8 rounded-md" style="border-color: #8A72AA;">
+                              <div>
+                                 @if($post->file)
+                                    <div class="relative">
+                                          <img src='{{ asset("storage/{$post->file->filepath}") }}' alt="File Image" class="w-44 h-40">
+                                          <div class="border-2 rounded-3xl absolute top-0 m-2 left-0 flex flex-row" style="background-color: #D583F1; border-color: #8A72AA;">
+                                             <img class="h-6" src='{{ asset("/img/user trans.png") }}'></img>
+                                             <p class= "pb-1 pr-2">{{ $place->author->name }}</p>
+                                          </div>
+                                    </div>
+                                 @endif
+                              </div>
+                              <div style="background-color: #ECCFFF;">
+                                 <p class="pl-1">{{ strlen($post->body) > 20 ? substr($post->body, 0, 20) . '...' : $post->body }}</p>
+                              </div>
+                           </div>
+                        </div>
+               @if(($index + 1) % 4 == 0)
+                  </div>
+                  <div class="flex flex-wrap">
+               @endif
+                     @empty
+                        <div class="w-full px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">No hay posts disponibles.</div>
+                     @endforelse
+                  </div>
+            </div>
+            <div class="pl-8" style="width: 10%;">
+               <div class="container flex-col space-y-40">
+                  <div class="pt-10">
+                     <img class="h-16 pl-10" src='{{ asset("/img/likes morado fill.png") }}'></img>
+                  </div>
+                  <div>
+                     <img class="h-16 pl-8" src='{{ asset("/img/user trans.png") }}'></img>
+                  </div>
+                  <div class="pb-10">
+                     <img class="h-16 pl-10" src='{{ asset("/img/favorites morado fill de verdad.png") }}'></img>
+                  </div>
+                  
+               </div>
+            </div>
+         </div>
+      </div>
+      <script>
+         // Índice de la publicación actual
+         let currentPlaceIndex = 0;
+
+         // Función para cambiar de publicación
+         function changePlace(direction) {
+            const places = document.querySelectorAll('.place-slide');
+            currentPlaceIndex += direction;
+
+            // Verificar límites
+            if (currentPlaceIndex < 0) {
+                  currentPlaceIndex = places.length - 1;
+            } else if (currentPlaceIndex >= places.length) {
+                  currentPlaceIndex = 0;
+            }
+
+            // Ocultar todas las publicaciones y mlacerar la actual
+            places.forEach(place => place.style.display = 'none');
+            places[currentPlaceIndex].style.display = 'block';
+         }
+         function openPlaceDetails(route, event) {
+            // Verifica si el evento se originó en un elemento con la clase "no-redirect"
+            if (event.target.classList.contains('no-redirect')) {
+                  // Si es un botón que no debe redireccionar, no hagas nada
+                  return;
+            }
+
+            // Evita la propagación del evento al contenedor padre
+            event.stopPropagation();
+            // Realiza la acción de redireccionamiento
+            window.open(route);
+         }
+      </script>
+
+   @endsection
+</x-geomir-layout>

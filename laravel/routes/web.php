@@ -8,8 +8,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\LanguageController;
-
-Route::get('/language/{locale}', [LanguageController::class, 'language'])->name('language');
+use App\Http\Controllers\AboutUsController;
 
 Route::resource('files', FileController::class)
     ->middleware(['auth']);
@@ -57,3 +56,7 @@ Route::get('mail/test', [MailController::class, 'test']);
 require __DIR__.'/auth.php';
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::get('/language/{locale}', [LanguageController::class, 'language'])->name('language');
+
+Route::get('/about-us', [AboutUsController::class, 'index'])->name('about-us');
