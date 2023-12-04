@@ -57,3 +57,5 @@ Route::get('mail/test', [MailController::class, 'test']);
 require __DIR__.'/auth.php';
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::get('/placesm09', [PlaceController::class, 'placesm09'])->name('placesm09');

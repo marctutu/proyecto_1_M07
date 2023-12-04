@@ -185,5 +185,21 @@ class PlaceController extends Controller
         return back()->with('error', 'You have not favorited this place');
     }
 
+    public function placesm09(Request $request)
+    {
+        $search = $request->input('search');
+
+        // Consultem els places amb paginació i, si hi ha un terme de cerca, filtrarem per aquest terme
+        $places = Place::with('author')
+            ->when($search, function ($query) use ($search) {
+                return $query->where('description', 'favorite', "%{$search}%");
+            })
+            ->withCount('favorited')
+            ->paginate(5);
+    
+        // Passem els places i el terme de cerca actual a la vista
+        return view('placesm09', compact('places', 'search'));
+    }
+
 }
 
