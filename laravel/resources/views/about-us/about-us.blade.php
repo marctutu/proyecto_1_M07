@@ -21,7 +21,7 @@
                     </div>
                 </div>
 
-                <div class="image-container bg-gray-300 w-64 h-64 m-4 p-4 text-center" onmouseover="playAudio('audioAxel')" onmouseleave="pauseAudio('audioAxel')">
+                <div class="image-container bg-gray-300 w-64 h-64 m-4 p-4 text-center" onmouseover="playAudio('audioAxel')" onmouseleave="pauseAudio('audioAxel')" onclick="openVideo()">
                     <img src="{{ asset('img/axel.jpg') }}" class="mx-auto grayscale-contrast">
                     <audio id="audioAxel" src="{{ asset('img/musica2.mp3') }}"></audio>
                     <div class="info absolute bottom-0 left-0 w-full p-4 bg-white bg-opacity-85">
