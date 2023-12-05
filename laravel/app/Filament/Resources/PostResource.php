@@ -31,7 +31,7 @@ class PostResource extends Resource
                     ->relationship('file')
                     ->saveRelationshipsWhenHidden()
                     ->schema([
-                            Forms\Components\FileUpload::make('file_id') // Es crea un component d'upload de fitxers per al camp "filepath".
+                            Forms\Components\FileUpload::make('file_id')->translateLabel() // Es crea un component d'upload de fitxers per al camp "filepath".
                                 ->required() // camp obligatori
                                 ->image() // només accepta imatges
                                 ->maxSize(2048) // tamany màxim del fitxer a 2048kb
@@ -45,18 +45,18 @@ class PostResource extends Resource
                     ]),
                     Forms\Components\Fieldset::make('Post')
                     ->schema([
-                        Forms\Components\Hidden::make('file_id'),
-                        Forms\Components\TextInput::make('body')
+                        Forms\Components\Hidden::make('file_id')->translateLabel(),
+                        Forms\Components\TextInput::make('body')->translateLabel()
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('latitude')
+                        Forms\Components\TextInput::make('latitude')->translateLabel()
                             ->required(),
-                        Forms\Components\TextInput::make('longitude')
+                        Forms\Components\TextInput::make('longitude')->translateLabel()
                             ->required(),
-                        Forms\Components\TextInput::make('author_name')
+                        Forms\Components\TextInput::make('author_name')->translateLabel()
                             ->default(fn () => auth()->user()->name)
                             ->disabled(),
-                        Forms\Components\Hidden::make('author_id')
+                        Forms\Components\Hidden::make('author_id')->translateLabel()
                             ->default(fn () => auth()->user()->id),
                             
                         
@@ -70,14 +70,14 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('body'),
-                Tables\Columns\TextColumn::make('file_id'),
-                Tables\Columns\TextColumn::make('latitude'),
-                Tables\Columns\TextColumn::make('longitude'),
-                Tables\Columns\TextColumn::make('author_id'),
-                Tables\Columns\TextColumn::make('created_at')
+                Tables\Columns\TextColumn::make('body')->translateLabel(),
+                Tables\Columns\TextColumn::make('file_id')->translateLabel(),
+                Tables\Columns\TextColumn::make('latitude')->translateLabel(),
+                Tables\Columns\TextColumn::make('longitude')->translateLabel(),
+                Tables\Columns\TextColumn::make('author_id')->translateLabel(),
+                Tables\Columns\TextColumn::make('created_at')->translateLabel()
                     ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
+                Tables\Columns\TextColumn::make('updated_at')->translateLabel()
                     ->dateTime(),
             ])
             ->filters([

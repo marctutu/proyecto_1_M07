@@ -25,7 +25,7 @@ class FileResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\FileUpload::make('filepath') // Es crea un component d'upload de fitxers per al camp "filepath".
+                Forms\Components\FileUpload::make('filepath')->translateLabel() // Es crea un component d'upload de fitxers per al camp "filepath".
                     ->required()
                     ->image()
                     ->maxSize(2048)
@@ -47,11 +47,11 @@ class FileResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('filepath'),
-                Tables\Columns\TextColumn::make('filesize'),
-                Tables\Columns\TextColumn::make('created_at')
+                Tables\Columns\TextColumn::make('filepath')->translateLabel(),
+                Tables\Columns\TextColumn::make('filesize')->translateLabel(),
+                Tables\Columns\TextColumn::make('created_at')->translateLabel()
                     ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
+                Tables\Columns\TextColumn::make('updated_at')->translateLabel()
                     ->dateTime(),
             ])
             ->filters([
