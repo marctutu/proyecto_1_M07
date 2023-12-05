@@ -38,6 +38,7 @@
                     </div>
                 </header>
             @endif
+            @include('partials.flash')
 
             <!-- Page Content -->
             <main>
