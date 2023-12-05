@@ -62,3 +62,5 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/about-us', [AboutUsController::class, 'index'])->name('about-us');
 
 Route::get('/postsm09', [PostController::class, 'postsm09'])->name('postsm09');
+
+Route::get('/placesm09', [PlaceController::class, 'placesm09'])->name('placesm09');
