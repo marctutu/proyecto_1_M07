@@ -172,5 +172,4 @@ class PostController extends Controller
 
         return back()->with('error', 'You have not liked this post');
     }
-
 }
