@@ -78,23 +78,29 @@
                                         @endif
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <a href="{{ route('places.show', $place->id) }}" class="text-indigo-600 hover:text-indigo-900">Ver</a>
-                                    <a href="{{ route('places.edit', $place->id) }}" class="text-indigo-600 hover:text-indigo-900">Editar</a>
-                                    <form action="{{ route('places.destroy', $place->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900">Eliminar</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="9" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">No hay lugares disponibles.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-                {{ $places->appends(['search' => request()->query('search')])->links() }}
+                                        <a href="{{ route('places.show', $place->id) }}" class="text-indigo-600 hover:text-indigo-900">Ver</a>
+                                    
+                                        @can('update', $place)
+                                            <a href="{{ route('places.edit', $place->id) }}" class="text-indigo-600 hover:text-indigo-900 ml-4">Editar</a>
+                                        @endcan
+                                        @can('delete', $place)
+                                            <form action="{{ route('places.destroy', $place->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro?');" class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-600 hover:text-red-900 ml-4">Eliminar</button>
+                                            </form>
+                                        @endcan
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="9" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">No hay lugares disponibles.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                    {{ $places->appends(['search' => request()->query('search')])->links() }}
+                </div>
             </div>
         </div>
     </div>

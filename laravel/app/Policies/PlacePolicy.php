@@ -17,6 +17,7 @@ class PlacePolicy
 
     public function view(User $user, Place $place)
     {
+        \Log::debug("Authorize view place");    
         // Tots poden veure els places individuals
         return true;
     }
@@ -39,17 +40,5 @@ class PlacePolicy
     {
         // "author" pot eliminar els seus propis places i "editor" qualsevol place
         return $user->role->name === 'author' && $user->id === $place->author_id || $user->role->name === 'editor';
-    }
-
-    public function like(User $user, Place $place)
-    {
-        //Només els usuaris amb rol "author" poden donar "like" als places
-        return $user->role->name === 'author';
-    }
-
-    public function unlike(User $user, Place $place)
-    {
-        // Només els usuaris amb rol "author" poden donar "unlike" als places
-        return $user->role->name === 'author';
     }
 }
