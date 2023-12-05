@@ -29,6 +29,18 @@
                             <a href="{{ url('/places') }}" style="background-color: blue;" class="text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                                 {{ __('Places') }}
                             </a>
+                            <a href="{{ url('/home') }}" style="background-color: blue;" class="text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                                {{ __('Home') }}
+                            </a>
+                            <a href="{{ url('/about-us') }}" style="background-color: blue;" class="text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                                {{ __('About Us') }}
+                            </a>
+                            <a href="{{ url('/postsm09') }}" style="background-color: blue;" class="text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                                {{ __('Posts M09') }}
+                            </a>
+                            <a href="{{ url('/placesm09') }}" style="background-color: blue;" class="text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                                {{ __('Places M09') }}
+                            </a>
                         </div>
                     </div>
                 </div>

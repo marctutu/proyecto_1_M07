@@ -1,7 +1,7 @@
 <!-- resources/views/geomir.blade.php -->
 <x-geomir-layout>
    @section('content')
-      <div class="" style="background-color: #CEB5DD;">
+      <div class="h-screen" style="background-color: #CEB5DD;">
 
          <!-- Menú superior con línea horizontal -->
          <div class="fixed w-screen top-0 z-20" style="background-color: #CEB5DD;">
