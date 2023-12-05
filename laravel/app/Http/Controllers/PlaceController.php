@@ -9,10 +9,11 @@ use Illuminate\Support\Facades\Storage;
 
 class PlaceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    // app/Http/Controllers/PlaceController.php
+ 
+    public function __construct()
+    {
+        $this->authorizeResource(Place::class, 'place');
+    }
 
     public function index(Request $request)
 {
