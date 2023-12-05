@@ -13,7 +13,7 @@
                     <audio id="audioMarc" src="{{ asset('img/musica1.mp3') }}"></audio>
                     <div class="info absolute bottom-0 left-0 w-full p-4 bg-white bg-opacity-85">
                         <h2 class="text-xl font-bold">Marc</h2>
-                        <p class="text-black">Página About Us</p>
+                        <p class="text-black">CEO</p>
                     </div>
                     <div class="image-overlay absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-50 opacity-0 transition-opacity duration-300 ease-in-out">
                         <img src="{{ asset('img/futbol.jpg') }}" alt="Hobby image" class="hobby-photo opacity-0 transition-opacity duration-300 ease-in-out">
@@ -26,7 +26,7 @@
                     <audio id="audioAxel" src="{{ asset('img/musica2.mp3') }}"></audio>
                     <div class="info absolute bottom-0 left-0 w-full p-4 bg-white bg-opacity-85">
                         <h2 class="text-xl font-bold">Axel</h2>
-                        <p class="text-black">Página About Us</p>
+                        <p class="text-black">CEO</p>
                     </div>
                     <div class="image-overlay absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-50 opacity-0 transition-opacity duration-300 ease-in-out">
                         <img src="{{ asset('img/ps5.jpg') }}" alt="Hobby image" class="hobby-photo opacity-0 transition-opacity duration-300 ease-in-out">
