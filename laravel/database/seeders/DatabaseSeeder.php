@@ -18,11 +18,16 @@ class DatabaseSeeder extends Seeder
         /* ]); */
 /* }*/
 
-    public function run()
-    {
-        $this->call([
-            UserSeeder::class,
-        ]);
-    }
+    // public function run()
+    // {
+    //     $this->call([
+    //         UserSeeder::class,
+    //         VisibilitySeeder::class
+    //     ]);
+    // }
 
-}
+    public function run()
+        {
+            $this->call(VisibilitySeeder::class);
+        }
+    }
