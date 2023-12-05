@@ -73,7 +73,7 @@ class PostController extends Controller
         ]);
 
         return redirect()->route('posts.show', $post)
-            ->with('success', 'Post successfully created');
+            ->with('success', __('Post successfully created'));
     }
 
     public function show(Post $post)
@@ -83,7 +83,7 @@ class PostController extends Controller
             return view('posts.show', compact('post'));
         } else {
             return redirect()->route('posts.index')
-                ->with('error', 'Post not found');
+                ->with('error', __('Post not found'));
         }
     }
 
@@ -133,7 +133,7 @@ class PostController extends Controller
         $post->update($validatedData);
     
         // Redirige con un mensaje de éxito.
-        return redirect()->route('posts.index')->with('success', 'Post and file successfully updated');
+        return redirect()->route('posts.index')->with('success', __('Post and file successfully updated'));
     }
 
     /**
@@ -144,7 +144,7 @@ class PostController extends Controller
         $post->delete();
 
         return redirect()->route('posts.index')
-            ->with('success', 'Post successfully deleted');
+            ->with('success', __('Post successfully deleted'));
     }
 
     public function like(Post $post)
@@ -154,10 +154,10 @@ class PostController extends Controller
         if (!$post->liked->contains(auth()->user())) {
             // Agrega el "like" al usuario actual
             $post->liked()->attach(auth()->user()->id);
-            return back()->with('success', 'You liked this post');
+            return back()->with('success', __('You liked this post'));
         }
 
-        return back()->with('error', 'You already liked this post');
+        return back()->with('error', __('You already liked this post'));
     }
 
     public function unlike(Post $post)
@@ -167,10 +167,10 @@ class PostController extends Controller
         if ($post->liked->contains(auth()->user())) {
             // Quita el "like" del usuario actual
             $post->liked()->detach(auth()->user()->id);
-            return back()->with('success', 'You unliked this post');
+            return back()->with('success', __('You unliked this post'));
         }
 
-        return back()->with('error', 'You have not liked this post');
+        return back()->with('error', __('You have not liked this post'));
     }
 
     public function postsm09(Request $request)

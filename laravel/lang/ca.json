@@ -1,4 +1,12 @@
 {
     "File successfully saved": "Fitxer desat correctament",
-    "ERROR uploading file": "ERROR pujant el fitxer"
+    "ERROR uploading file": "ERROR pujant el fitxer",
+    "Post successfully created": "Post creat amb èxit",
+    "Post not found": "Post no trobat",
+    "Post and file successfully updated": "Post i fitxer actualitzats amb èxit",
+    "Post successfully deleted": "Post esborrat amb èxit",
+    "You liked this post": "T'agrada aquest post",
+    "You already liked this post": "Ja t'agrada aquest post",
+    "You unliked this post": "Ja no t'agrada aquest post",
+    "You have not liked this post": "No has donat m'agrada a aquest post"
 }
