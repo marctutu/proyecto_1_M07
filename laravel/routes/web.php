@@ -60,3 +60,5 @@ require __DIR__.'/auth.php';
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/about-us', [AboutUsController::class, 'index'])->name('about-us');
+
+Route::get('/postsm09', [PostController::class, 'postsm09'])->name('postsm09');

@@ -173,4 +173,16 @@ class PostController extends Controller
         return back()->with('error', 'You have not liked this post');
     }
 
+    public function postsm09(Request $request)
+    {
+        $search = $request->input('search');
+
+        $posts = Post::with('author')
+            ->when($search, function ($query) use ($search) {
+                return $query->where('description', 'favorite', "%{$search}%");
+            })
+            ->withCount('liked')
+            ->paginate(5);
+            return view('postsm09', compact('posts', 'search'));
+        }
 }
