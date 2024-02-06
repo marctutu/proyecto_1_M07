@@ -1,0 +1,37 @@
+{
+    "Dashboard": "Panel",
+    "Resource": "Recurso",
+    "Resources": "Recursos",
+    "File": "Fichero",
+    "Files": "Ficheros",
+    "Place": "Lugar",
+    "Places": "Lugares",
+    "Favorite": "Favorito",
+    "Favorites": "Favoritos",
+    "Post": "Entrada",
+    "Posts": "Entradas",
+    "Like": "Like",
+    "Likes": "Likes",
+    "Role": "Rol",
+    "Roles": "Roles",
+    "User": "Usuari/a",
+    "Users": "Usuarias",
+    "Visibility": "Visibilidad",
+    "Visibilities": "Visibilidades",
+    "Coordinate": "Coordenada",
+    "Coordinates": "Coordenadas",
+    "Publish": "Publicación",
+    
+    "Actions": "Acciones",
+    "View": "Ver",
+    "Edit": "Editar",
+    "Delete": "Eliminar",
+
+    "You're logged in!": "Te has autenticado!",
+    "Press Enter to search": "Presiona Enter para buscar",
+
+    "ERROR uploading file": "ERROR subiendo el fichero",
+    ":resource successfully saved": ":resource guardado correctamente",
+    ":resource successfully deleted": ":resource eliminado correctamente"
+
+}

@@ -1,0 +1,37 @@
+{
+    "Dashboard": "Panell",
+    "Resource": "Recurs",
+    "Resources": "Recursos",
+    "File": "Fitxer",
+    "Files": "Fitxers",
+    "Place": "Lloc",
+    "Places": "Llocs",
+    "Favorite": "Favorit",
+    "Favorites": "Favorits",
+    "Post": "Entrada",
+    "Posts": "Entrades",
+    "Like": "Like",
+    "Likes": "Likes",
+    "Role": "Rol",
+    "Roles": "Rols",
+    "User": "Usuari/a",
+    "Users": "Usuàries",
+    "Visibility": "Visibilitat",
+    "Visibilities": "Visibilitats",
+    "Coordinate": "Coordenada",
+    "Coordinates": "Coordenades",
+    "Publish": "Publicació",
+    
+    "Actions": "Accions",
+    "View": "Veure",
+    "Edit": "Editar",
+    "Delete": "Eliminar",
+
+    "You're logged in!": "T'has autenticat!",
+    "Press Enter to search": "Prem Enter per cercar",
+
+    "ERROR uploading file": "ERROR pujant el fitxer",
+    ":resource successfully saved": ":resource desat correctament",
+    ":resource successfully deleted": ":resource eliminat correctament"
+
+}
