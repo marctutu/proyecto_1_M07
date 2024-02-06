@@ -19,3 +19,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('files', FileController::class);
+
+Route::post('files/{file}', [FileController::class, 'update_workaround']);

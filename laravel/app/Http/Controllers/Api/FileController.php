@@ -58,6 +58,14 @@ class FileController extends Controller
 
 
     /**
+     * Método puente para actualizar archivos mediante POST debido a limitaciones de PHP.
+     */
+    public function update_workaround(Request $request, $id)
+    {
+        return $this->update($request, $id);
+    }
+
+    /**
      * Display the specified resource.
      */
     public function show(string $id)
