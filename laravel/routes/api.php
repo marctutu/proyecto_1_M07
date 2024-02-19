@@ -30,4 +30,8 @@ Route::post('/login', [TokenController::class, 'login']);
 Route::post('/logout', [TokenController::class, 'logout'])->middleware('auth:sanctum');
 Route::get('/user', [TokenController::class, 'user'])->middleware('auth:sanctum');
 
-Route::apiResource('posts', PostController::class);
+Route::apiResource('posts', App\Http\Controllers\Api\PostController::class);
+
+Route::post('posts/{post}/likes', [App\Http\Controllers\Api\PostController::class, 'storeLike'])->name('posts.likes.store');
+Route::delete('posts/{post}/likes/{like}', [App\Http\Controllers\Api\PostController::class, 'destroyLike'])->name('posts.likes.destroy');
+

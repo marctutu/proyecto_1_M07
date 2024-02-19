@@ -11,7 +11,7 @@ use App\Models\File;
 
 class PostTest extends TestCase
 {
-    use RefreshDatabase;
+    // use RefreshDatabase;
 
     public function test_create_post()
     {
