@@ -10,6 +10,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\ReviewController;
 
 use App\Models\Role;
 
@@ -93,3 +94,6 @@ Route::controller(PlaceController::class)->group(function () {
 
 Route::get('/language/{locale}', [LanguageController::class, 'language'])
     ->name('language');
+Route::resource('reviews', ReviewController::class);
+Route::resource('places.reviews', ReviewController::class);
+    

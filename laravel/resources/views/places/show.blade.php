@@ -67,6 +67,39 @@
             </x-secondary-button>
             @endcan
         </div>
+        <!-- Mostrar formulario de creación de reseñas -->
+        <h2>Crear reseña</h2>
+        <form method="POST" action="{{ route('reviews.store', $place) }}">
+            @csrf
+            <input type="hidden" name="place_id" value="{{ $place->id }}">
+            <div>
+                <label for="content">Contenido de la reseña:</label>
+                <textarea name="content" id="content"></textarea>
+            </div>
+            <button type="submit">Enviar reseña</button>
+        </form>
+
+        <!-- Mostrar reseñas -->
+        @if($reviews->count() > 0)
+            <h2>Reseñas</h2>
+            <ul>
+                @foreach($reviews as $review)
+                    <li>
+                        {{ $review->content }}
+                        <!-- Mostrar botón de eliminar solo si el usuario autenticado es el autor de la reseña -->
+                        @if(auth()->check() && $review->user_id === auth()->id())
+                            <form method="POST" action="{{ route('reviews.destroy', $review) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit">Eliminar</button>
+                            </form>
+                        @endif
+                    </li>
+                @endforeach
+            </ul>
+        @endif
+
+
         <div class="mt-8">
             <p>{{ $numFavs . " " . __('favorites') }}</p>
             @include('partials.buttons-favs')

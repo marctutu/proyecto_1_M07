@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Place;
 use App\Models\File;
 use App\Models\Favorite;
+use App\Models\Review;
 
 class PlaceController extends Controller
 {
@@ -122,12 +123,16 @@ class PlaceController extends Controller
     {
         // Count
         $place->loadCount('favorited');
-
+        
+        // Load reviews associated with the place
+        $reviews = Review::where('place_id', $place->id)->get();
+    
         return view("places.show", [
             'place'   => $place,
             'file'    => $place->file,
             'author'  => $place->user,
             'numFavs' => $place->favorited_count,
+            'reviews' => $reviews, // Pass the reviews to the view
         ]);
     }
 

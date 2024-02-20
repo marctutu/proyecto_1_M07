@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\FileController;
 use App\Http\Controllers\Api\TokenController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\PlaceController;
+use App\Http\Controllers\Api\ReviewController;
+
 
 
 
@@ -34,3 +36,8 @@ Route::post('/places/{place}', [PlaceController::class, 'update_workaround'])->m
 
 Route::post('/places/{place}/favorite', [PlaceController::class, 'favorite']);
 Route::delete('/places/{place}/favorite', [PlaceController::class, 'unfavorite']);
+
+
+Route::get('/reviews', [ReviewController::class, 'index']);
+Route::delete('/places/{place}/reviews/{review}', [ReviewController::class, 'destroy']);
+Route::post('/places/{place}/reviews', [ReviewController::class, 'store']);
