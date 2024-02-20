@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Post;
 use App\Models\File;
 use App\Models\Like;
+use App\Models\Comment;
 
 class PostController extends Controller
 {
@@ -116,16 +117,16 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        // Count
-        $post->loadCount('liked');
-
+        $post->load(['comments.user'])->loadCount('liked');
+    
         return view("posts.show", [
             'post'     => $post,
             'file'     => $post->file,
             'author'   => $post->user,
             'numLikes' => $post->liked_count,
+            'comments' => $post->comments,
         ]);
-    }
+    }    
 
     /**
      * Show the form for editing the specified resource.

@@ -67,6 +67,33 @@
             <p>{{ $numLikes . " " . __('likes') }}</p>
             @include('partials.buttons-likes')
         </div>
+
+        <div class="mt-8">
+            <h4>{{ __('Add a comment') }}</h4>
+            <form action="{{ route('comments.store', $post) }}" method="POST">
+                @csrf
+                <textarea name="comment" class="form-control" rows="3" required></textarea>
+                <button type="submit" class="btn btn-primary mt-2">{{ __('Submit') }}</button>
+            </form>
+        </div>
+
+        @forelse($post->comments as $comment)
+            <div class="mb-4">
+                <p><strong>{{ $comment->user->name }}</strong> ({{ $comment->created_at->format('d/m/Y H:i') }}):</p>
+                <p>{{ $comment->comment }}</p>
+                @if(auth()->user()->id === $comment->user_id || auth()->user()->isAdmin())
+                    <form action="{{ route('comments.destroy', [$post, $comment]) }}" method="POST" onsubmit="return confirm('{{ __('Are you sure?') }}');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm">{{ __('Delete') }}</button>
+                    </form>
+                @endif
+            </div>
+        @empty
+            <p>{{ __('No comments yet.') }}</p>
+        @endforelse
+
+
     @endsection
 </x-columns>
 @endsection

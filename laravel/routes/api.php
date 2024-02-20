@@ -41,3 +41,9 @@ Route::delete('/places/{place}/favorite', [PlaceController::class, 'unfavorite']
 
 Route::post('/posts/{post}/like', [PostController::class, 'like']);
 Route::delete('/posts/{post}/like', [PostController::class, 'unlike']);
+
+Route::prefix('posts/{post}')->group(function () {
+    Route::get('/comments', [CommentController::class, 'index'])->name('api.comments.index');
+    Route::post('/comments', [CommentController::class, 'store'])->name('api.comments.store');
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('api.comments.destroy')->where('comment', '[0-9]+');
+});
