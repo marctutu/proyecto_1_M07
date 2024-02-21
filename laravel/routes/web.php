@@ -72,8 +72,8 @@ Route::controller(PostController::class)->group(function () {
         ->name('posts.unlike');
 });
 
-Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store')->middleware('auth');
-Route::delete('/posts/{post}/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy')->middleware('auth');
+Route::resource('comments', CommentController::class);
+Route::resource('posts.comments', CommentController::class);
 
 // Places
 // NOTE: PlacePolicy with authorizeResource helper and can middleware

@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\FileController;
 use App\Http\Controllers\Api\TokenController;
 use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\CommentController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -31,19 +33,15 @@ Route::post('/logout', [TokenController::class, 'logout'])->middleware('auth:san
 Route::get('/user', [TokenController::class, 'user'])->middleware('auth:sanctum');
 
 Route::apiResource('files', FileController::class);
-Route::apiResource('posts', PostController::class)->middleware('auth:sanctum');
-Route::apiResource('places', PlaceController::class);
+
+Route::apiResource('posts', PostController::class);
 
 Route::post('posts/{post}', [PostController::class, 'update_workaround'])->middleware('auth:sanctum');
-
-Route::post('/places/{place}/favorite', [PlaceController::class, 'favorite']);
-Route::delete('/places/{place}/favorite', [PlaceController::class, 'unfavorite']);
 
 Route::post('/posts/{post}/like', [PostController::class, 'like']);
 Route::delete('/posts/{post}/like', [PostController::class, 'unlike']);
 
-Route::prefix('posts/{post}')->group(function () {
-    Route::get('/comments', [CommentController::class, 'index'])->name('api.comments.index');
-    Route::post('/comments', [CommentController::class, 'store'])->name('api.comments.store');
-    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('api.comments.destroy')->where('comment', '[0-9]+');
-});
+Route::get('/comments', [CommentController::class, 'index']);
+Route::delete('/posts/{post}/comments/{comment}', [CommentController::class, 'destroy']);
+Route::post('/posts/{post}/comments', [CommentController::class, 'store']);
+

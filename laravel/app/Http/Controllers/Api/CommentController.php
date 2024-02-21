@@ -3,49 +3,80 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Post;
-use App\Models\Comment;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Response;
+use App\Models\Comment;
+use App\Http\Resources\CommentResource;
+use App\Http\Requests\Api\StoreCommentRequest;
+use App\Models\Post;
+use App\Models\File;
+use App\Models\User;
+use App\Models\Visibility;
+use App\Models\Like;
+use Illuminate\Http\UploadedFile;
+
 
 class CommentController extends Controller
 {
-    // Mostrar todos los comentarios de un post
-    public function index(Post $post)
+
+    public function index()
     {
-        $comments = $post->comments; // Asumiendo que tienes una relación 'comments' en tu modelo Post
-        return response()->json($comments);
+        $comments = Comment::all();
+        return CommentResource::collection($comments);
     }
 
-    // Guardar un nuevo comentario para un post
-    public function store(Request $request, Post $post)
+
+    public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'comment' => 'required|string|max:255', // Ajusta las reglas según tus necesidades
+        // Validar datos del formulario
+        $validatedData = $request->validate([
+            'comment' => 'required|string',
+            'post_id' => 'required|exists:posts,id', // Asegúrate de que el lugar exista en la base de datos
         ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+    
+        try {
+            // Obtener el ID del usuario autenticado
+            $userId = auth()->id();
+    
+            // Crear la reseña con los campos proporcionados
+            $comment = new Comment([
+                'comment' => $request->input('comment'),
+                'user_id' => $userId,
+                'post_id' => $request->input('post_id'),
+            ]);
+    
+            // Guardar la reseña en la base de datos
+            $comment->save();
+    
+            // Devolver una respuesta con el código de estado 201 (creado) y los datos de la reseña creada
+            return response()->json([
+                'success' => true,
+                'data' => $comment,
+            ], Response::HTTP_CREATED);
+        } catch (\Exception $e) {
+            // Manejar cualquier excepción que pueda ocurrir durante el proceso de almacenamiento de la reseña
+            \Log::error('Error storing comment: ' . $e->getMessage());
+            // Devolver una respuesta con el código de estado 500 (error interno del servidor)
+            return response()->json([
+                'success' => false,
+                'message' => 'Error storing comment',
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-
-        $comment = new Comment();
-        $comment->comment = $request->comment;
-        // Asegúrate de tener una columna user_id en tu tabla comments para guardar el autor del comentario
-        $comment->user_id = auth()->user()->id; 
-        $post->comments()->save($comment);
-
-        return response()->json($comment, 201);
     }
 
-    // Eliminar un comentario
-    public function destroy(Post $post, Comment $comment)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Comment  $comment
+     * @return \Illuminate\Http\Response
+     */
+    
+    public function destroy($postId, $commentId)
     {
-        if ($comment->user_id != auth()->user()->id && !auth()->user()->can('delete comments')) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
-
-        $comment->delete();
-
-        return response()->json(['message' => 'Comment deleted successfully']);
+        $comment = Comment::find($commentId);
+            $comment->delete();
+            return response()->noComment();
     }
+    
 }

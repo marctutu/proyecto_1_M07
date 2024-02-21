@@ -2,55 +2,42 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Comment;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
-    /**
-     * Muestra una lista de los comentarios de un post específico.
-     */
-    public function index(Post $post)
+    public function show(Post $post)
     {
-        $comments = $post->comments()->with('user')->get(); // Asegúrate de que el modelo Post tenga una relación comments()
-
-        return view('comments.index', compact('comments', 'post'));
+        $comments = $post->comments;
+        return view('posts.show', compact('post', 'comments'));
     }
 
-    /**
-     * Almacena un nuevo comentario en la base de datos.
-     */
-    public function store(Request $request, Post $post)
+    public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'comment' => 'required|string|max:255',
+        $request->validate([
+            'post_id' => 'required|exists:posts,id',
+            'comment' => 'required|string',
         ]);
 
         $comment = new Comment();
-        $comment->comment = $validatedData['comment'];
-        $comment->user_id = Auth::id();
-        $comment->post_id = $post->id;
+        $comment->post_id = $request->post_id;
+        $comment->comment = $request->comment;
+        $comment->user_id = auth()->id();
         $comment->save();
 
-        return redirect()->route('posts.show', $post->id)
-                         ->with('success', __('Comment added successfully.'));
+        return redirect()->back()->with('success', 'Comentario creada exitosamente.');
     }
 
-    /**
-     * Elimina un comentario específico.
-     */
-    public function destroy(Post $post, Comment $comment)
+    public function destroy(Comment $comment)
     {
-        // Asegurarse de que el usuario pueda eliminar el comentario
-        if (Auth::id() === $comment->user_id || Auth::user()->hasRole('admin')) {
-            $comment->delete();
-
-            return redirect()->route('posts.show', $post->id)
-                             ->with('success', __('Comment removed successfully.'));
-        } else {
-            return back()->with('error', __('You do not have permission to delete this comment.'));
+        if (auth()->id() !== $comment->user_id) {
+            abort(403, 'No tienes permiso para eliminar esta comentario.');
         }
+
+        $comment->delete();
+
+        return redirect()->back()->with('success', 'Comentario eliminada exitosamente.');
     }
 }

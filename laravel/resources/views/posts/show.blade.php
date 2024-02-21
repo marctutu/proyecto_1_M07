@@ -7,7 +7,7 @@
 @section('box-content')
 <x-columns columns=2>
     @section('column-1')
-        <img class="w-full" src="{{ asset('storage/'.$file->filepath) }}" title="Image preview"/>
+        <img class="w-full" src="{{ asset('storage/'.$file->filepath) }}" title="Image pcomment"/>
     @endsection
     @section('column-2')
         <table class="table">
@@ -68,30 +68,37 @@
             @include('partials.buttons-likes')
         </div>
 
-        <div class="mt-8">
-            <h4>{{ __('Add a comment') }}</h4>
-            <form action="{{ route('comments.store', $post) }}" method="POST">
-                @csrf
-                <textarea name="comment" class="form-control" rows="3" required></textarea>
-                <button type="submit" class="btn btn-primary mt-2">{{ __('Submit') }}</button>
-            </form>
-        </div>
-
-        @forelse($post->comments as $comment)
-            <div class="mb-4">
-                <p><strong>{{ $comment->user->name }}</strong> ({{ $comment->created_at->format('d/m/Y H:i') }}):</p>
-                <p>{{ $comment->comment }}</p>
-                @if(auth()->user()->id === $comment->user_id || auth()->user()->isAdmin())
-                    <form action="{{ route('comments.destroy', [$post, $comment]) }}" method="POST" onsubmit="return confirm('{{ __('Are you sure?') }}');">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm">{{ __('Delete') }}</button>
-                    </form>
-                @endif
+        <!-- Mostrar formulario de creación de comentarios -->
+        <h2>Crear Comentario</h2>
+        <form method="POST" action="{{ route('comments.store', $post) }}">
+            @csrf
+            <input type="hidden" name="post_id" value="{{ $post->id }}">
+            <div>
+                <label for="comment">Contenido del comentario:</label>
+                <textarea name="comment" id="comment"></textarea>
             </div>
-        @empty
-            <p>{{ __('No comments yet.') }}</p>
-        @endforelse
+            <button type="submit">Enviar comentario</button>
+        </form>
+
+        <!-- Mostrar comentarios -->
+        @if($comments->count() > 0)
+            <h2>Comentarios</h2>
+            <ul>
+                @foreach($comments as $comment)
+                    <li>
+                        {{ $comment->comment }}
+                        <!-- Mostrar botón de eliminar solo si el usuario autenticado es el autor de la reseña -->
+                        @if(auth()->check() && $comment->user_id === auth()->id())
+                            <form method="POST" action="{{ route('comments.destroy', $comment) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit">Eliminar</button>
+                            </form>
+                        @endif
+                    </li>
+                @endforeach
+            </ul>
+        @endif
 
 
     @endsection

@@ -115,19 +115,23 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
+ 
     public function show(Post $post)
     {
-        $post->load(['comments.user'])->loadCount('liked');
+        // Count
+        $post->loadCount('liked');
+        
+        // Load reviews associated with the place
+        $comments = Comment::where('post_id', $post->id)->get();
     
         return view("posts.show", [
-            'post'     => $post,
-            'file'     => $post->file,
-            'author'   => $post->user,
+            'post'   => $post,
+            'file'    => $post->file,
+            'author'  => $post->user,
             'numLikes' => $post->liked_count,
-            'comments' => $post->comments,
+            'comments' => $comments, // Pass the reviews to the view
         ]);
-    }    
-
+    }
     /**
      * Show the form for editing the specified resource.
      *
