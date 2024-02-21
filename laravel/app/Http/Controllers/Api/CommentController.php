@@ -46,11 +46,11 @@ class CommentController extends Controller
             ]);
     
             // Guardar la reseña en la base de datos
-            $comment->save();
+            $success = $comment->save();
     
             // Devolver una respuesta con el código de estado 201 (creado) y los datos de la reseña creada
             return response()->json([
-                'success' => true,
+                'success' => $success,
                 'data' => $comment,
             ], Response::HTTP_CREATED);
         } catch (\Exception $e) {
@@ -76,7 +76,7 @@ class CommentController extends Controller
     {
         $comment = Comment::find($commentId);
             $comment->delete();
-            return response()->noComment();
+            return response()->noContent();
     }
     
 }
