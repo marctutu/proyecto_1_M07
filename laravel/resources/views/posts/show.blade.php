@@ -7,7 +7,7 @@
 @section('box-content')
 <x-columns columns=2>
     @section('column-1')
-        <img class="w-full" src="{{ asset('storage/'.$file->filepath) }}" title="Image preview"/>
+        <img class="w-full" src="{{ asset('storage/'.$file->filepath) }}" title="Image pcomment"/>
     @endsection
     @section('column-2')
         <table class="table">
@@ -67,6 +67,40 @@
             <p>{{ $numLikes . " " . __('likes') }}</p>
             @include('partials.buttons-likes')
         </div>
+
+        <!-- Mostrar formulario de creación de comentarios -->
+        <h2>Crear Comentario</h2>
+        <form method="POST" action="{{ route('comments.store', $post) }}">
+            @csrf
+            <input type="hidden" name="post_id" value="{{ $post->id }}">
+            <div>
+                <label for="comment">Contenido del comentario:</label>
+                <textarea name="comment" id="comment"></textarea>
+            </div>
+            <button type="submit">Enviar comentario</button>
+        </form>
+
+        <!-- Mostrar comentarios -->
+        @if($comments->count() > 0)
+            <h2>Comentarios</h2>
+            <ul>
+                @foreach($comments as $comment)
+                    <li>
+                        {{ $comment->comment }}
+                        <!-- Mostrar botón de eliminar solo si el usuario autenticado es el autor de la reseña -->
+                        @if(auth()->check() && $comment->user_id === auth()->id())
+                            <form method="POST" action="{{ route('comments.destroy', $comment) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit">Eliminar</button>
+                            </form>
+                        @endif
+                    </li>
+                @endforeach
+            </ul>
+        @endif
+
+
     @endsection
 </x-columns>
 @endsection

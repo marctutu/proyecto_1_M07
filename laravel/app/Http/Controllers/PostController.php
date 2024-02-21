@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Post;
 use App\Models\File;
 use App\Models\Like;
+use App\Models\Comment;
 
 class PostController extends Controller
 {
@@ -114,19 +115,23 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
+ 
     public function show(Post $post)
     {
         // Count
         $post->loadCount('liked');
-
+        
+        // Load reviews associated with the place
+        $comments = Comment::where('post_id', $post->id)->get();
+    
         return view("posts.show", [
-            'post'     => $post,
-            'file'     => $post->file,
-            'author'   => $post->user,
+            'post'   => $post,
+            'file'    => $post->file,
+            'author'  => $post->user,
             'numLikes' => $post->liked_count,
+            'comments' => $comments, // Pass the reviews to the view
         ]);
     }
-
     /**
      * Show the form for editing the specified resource.
      *

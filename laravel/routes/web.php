@@ -11,6 +11,8 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\CommentController;
+
 
 use App\Models\Role;
 
@@ -70,6 +72,9 @@ Route::controller(PostController::class)->group(function () {
     Route::delete('/posts/{post}/likes', 'unlike')
         ->name('posts.unlike');
 });
+
+Route::resource('comments', CommentController::class);
+Route::resource('posts.comments', CommentController::class);
 
 // Places
 // NOTE: PlacePolicy with authorizeResource helper and can middleware

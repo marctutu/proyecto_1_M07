@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\FileController;
 use App\Http\Controllers\Api\TokenController;
 use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\PlaceController;
 use App\Http\Controllers\Api\ReviewController;
 
@@ -41,3 +42,15 @@ Route::delete('/places/{place}/favorite', [PlaceController::class, 'unfavorite']
 Route::get('/reviews', [ReviewController::class, 'index']);
 Route::delete('/places/{place}/reviews/{review}', [ReviewController::class, 'destroy']);
 Route::post('/places/{place}/reviews', [ReviewController::class, 'store']);
+
+Route::apiResource('posts', PostController::class);
+
+Route::post('posts/{post}', [PostController::class, 'update_workaround'])->middleware('auth:sanctum');
+
+Route::post('/posts/{post}/like', [PostController::class, 'like']);
+Route::delete('/posts/{post}/like', [PostController::class, 'unlike']);
+
+Route::get('/comments', [CommentController::class, 'index']);
+Route::delete('/posts/{post}/comments/{comment}', [CommentController::class, 'destroy']);
+Route::post('/posts/{post}/comments', [CommentController::class, 'store']);
+
