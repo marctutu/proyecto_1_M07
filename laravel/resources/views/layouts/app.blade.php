@@ -26,11 +26,11 @@
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-P1VKP0M2KR"></script>
         <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
 
-        gtag('config', 'G-P1VKP0M2KR');
+            gtag('config', 'G-P1VKP0M2KR');
         </script>
     </head>
     <body class="font-sans antialiased">
