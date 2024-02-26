@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use RalphJSmit\Laravel\SEO\Traits\HasSEO;
 
 class Place extends Model
 {
-    use HasFactory, HasSEO;
+    use HasFactory;
     
     protected $fillable = [
         'name',
@@ -59,13 +58,5 @@ class Place extends Model
     public function visibility()
     {
         return $this->belongsTo(Visibility::class);
-    }
-
-    public function getDynamicSEOData(): array
-    {
-        return [
-            'name' => $this->name,
-            'description' => $this->description,
-        ];
     }
 }

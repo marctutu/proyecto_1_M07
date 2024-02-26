@@ -13,8 +13,6 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
 
 use Livewire\TemporaryUploadedFile;
 
@@ -85,21 +83,6 @@ class PlaceResource extends Resource
                             ->relationship('visibility', 'name')
                             ->required()
                             ->default(Visibility::PUBLIC),
-                    ]),
-                Forms\Components\Fieldset::make('SEO Settings')
-                    ->schema([
-                        TextInput::make('seo_title')
-                            ->label('SEO Title')
-                            ->maxLength(60) // La longitud màxima recomanada per a títols SEO
-                            ->help('The title tag for SEO. Should be unique for each post.'),
-                        Textarea::make('seo_description')
-                            ->label('SEO Description')
-                            ->maxLength(160) // La longitud màxima recomanada per a descripcions SEO
-                            ->help('The meta description for SEO. Briefly summarize the page content.'),
-                        TextInput::make('seo_keywords')
-                            ->label('SEO Keywords')
-                            ->help('Comma-separated keywords for SEO.'),
-                        // Pots afegir més camps SEO si és necessari
                     ]),
             ]);
     }
