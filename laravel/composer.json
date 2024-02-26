@@ -12,6 +12,8 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
+        "ralphjsmit/laravel-filament-seo": "^1.0",
+        "ralphjsmit/laravel-seo": "^1.4",
         "spatie/laravel-permission": "^6.3"
     },
     "require-dev": {

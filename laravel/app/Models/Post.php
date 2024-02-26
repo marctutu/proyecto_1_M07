@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use RalphJSmit\Laravel\SEO\Traits\HasSEO;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSEO;
 
     protected $fillable = [
         'body',
@@ -62,6 +63,13 @@ class Post extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function getDynamicSEOData(): array
+    {
+        return [
+            'body' => $this->body,
+        ];
     }
 
 }
