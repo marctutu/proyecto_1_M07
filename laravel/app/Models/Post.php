@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use RalphJSmit\Laravel\SEO\Support\HasSEO;
+use Illuminate\Support\Str;
 
 class Post extends Model
 {
@@ -69,10 +70,15 @@ class Post extends Model
 
     protected function getDynamicSEOData(): SEOData
     {
+        $truncatedBody = Str::limit($this->body, 160); // Truncate the body to use as a description
+    
+        // Make sure the author relationship is loaded to prevent N+1 queries
+        $authorName = $this->author->name ?? 'Marc Tutusaus Vilanova'; // Use 'name' from the User model
+    
         return new SEOData(
-            title: $this->title,
-            description: $this->excerpt,
-            author: $this->author->fullName,
+            title: $truncatedBody,
+            description: $truncatedBody,
+            author: $authorName, // Here you use the author's name
         );
     }
 
