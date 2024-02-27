@@ -11,8 +11,7 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-        <meta name="google-site-verification" content="e055uh1N9s80XMT9wR72v5QY_gFxEGrZudMibQZNQoU" />
-        
+        <meta name="google-site-verification" content="B6xSZCHtZkT--_z3BN9MRtpcDYS7w7Xwh31o1q3xUok" />
         <!-- Styles and scripts -->
         @env(['local','development'])
             @vite(['resources/css/app.css', 'resources/js/app.js'])  
